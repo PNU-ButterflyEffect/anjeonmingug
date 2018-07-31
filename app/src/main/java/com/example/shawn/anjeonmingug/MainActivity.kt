@@ -1,5 +1,7 @@
 package com.example.shawn.anjeonmingug
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -9,14 +11,43 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import android.util.Base64.NO_WRAP
+import android.provider.SyncStateContract.Helpers.update
+import android.content.pm.PackageManager
+import android.content.pm.PackageInfo
+import android.util.Base64
+import android.util.Log
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
+
+
+
 
 class MainActivity : AppCompatActivity() {
+    fun getKeyHash(context: Context): String? {
+        val manager = context.getPackageManager()
+        val info = manager?.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES)
+        /*val manager = context.packageManager
+        val packageInfo = manager?.getPackageInfo(context, PackageManager.GET_SIGNATURES) ?: return null*/
 
+        for (signature in info!!.signatures) {
+            try {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+            } catch (e: NoSuchAlgorithmException) {
+                Log.w(TAG, "Unable to get MessageDigest. signature=$signature", e)
+            }
+
+        }
+        return null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        println("///////     " + getKeyHash(this))
         loginvirtual.setOnClickListener{
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
