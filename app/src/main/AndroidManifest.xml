@@ -20,6 +20,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity"></activity>
+
     </application>
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="d75b37b88a66fea4c1b561f042400150"/>
 
 </manifest>
