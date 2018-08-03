@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/loginvirtual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="92dp"
+        android:layout_height="70dp"
         android:text="login virtual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
