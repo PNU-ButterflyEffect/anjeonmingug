@@ -17,6 +17,8 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -25,6 +27,7 @@ import java.security.NoSuchAlgorithmException
 
 
 class MainActivity : AppCompatActivity() {
+
     fun getKeyHash(context: Context): String? {
         val manager = context.getPackageManager()
         val info = manager?.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES)
@@ -52,6 +55,19 @@ class MainActivity : AppCompatActivity() {
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }
+        textView2.bringToFront()
+        textView6.bringToFront()
+    }
+    fun createEmailId(){
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
