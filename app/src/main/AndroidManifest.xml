@@ -28,4 +28,6 @@
     </uses-permission>
     <meta-data android:name="com.kakao.sdk.AppKey" android:value="6f504f9b73ad280372b2aff0036b6f32"/>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>
