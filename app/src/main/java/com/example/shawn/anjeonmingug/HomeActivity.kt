@@ -1,18 +1,13 @@
 package com.example.shawn.anjeonmingug
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-
-import net.daum.mf.map.api.MapView
 import android.widget.RelativeLayout
-import android.view.ViewGroup
-import net.daum.mf.map.api.MapView.MapViewEventListener
+import net.daum.mf.map.api.MapView
 
 
-class HomeActivity() : AppCompatActivity(){
+class HomeActivity() : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

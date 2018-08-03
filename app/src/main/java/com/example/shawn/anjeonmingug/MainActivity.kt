@@ -50,6 +50,11 @@ class MainActivity : AppCompatActivity() {
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }
+        button_getstarted.setOnClickListener {
+            var SignupActivity = Intent(this, SignupActivity::class.java)
+            startActivity(SignupActivity)
+
+        }
 
         textView_login.bringToFront()
         textView_google.bringToFront()

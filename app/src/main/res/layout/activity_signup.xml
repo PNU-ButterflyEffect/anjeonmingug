@@ -3,20 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
             android:id="@+id/signup_title"
             android:layout_width="117dp"
             android:layout_height="31dp"
@@ -30,7 +39,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/signup_anjeonmingug" />
 
-        <EditText
+    <EditText
+        android:id="@+id/editText_name"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="342dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="252dp"
+        android:ems="10"
+        android:hint="이름"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
             android:id="@+id/editText_email"
             android:layout_width="324dp"
             android:layout_height="wrap_content"
@@ -52,23 +77,7 @@
             app:layout_constraintStart_toStartOf="@+id/editText_email"
             app:layout_constraintTop_toBottomOf="@+id/editText_email" />
 
-        <EditText
-            android:id="@+id/editText_name"
-            android:layout_width="324dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="342dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="252dp"
-            android:ems="10"
-            android:hint="이름"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
+    <ImageView
             android:id="@+id/button_signup"
             android:layout_width="331dp"
             android:layout_height="42dp"
@@ -87,6 +96,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:text="회원가입"
             android:textColor="#ffffff"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/button_signup"
@@ -100,12 +110,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="81dp"
+            android:layout_marginTop="54dp"
+            android:text="Already have a account? "
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/button_gotologin"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="477dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_signup"
             tools:text="Already have a account? " />
 
         <TextView
@@ -113,6 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="80dp"
+            android:text="Login here"
             android:textColor="#f0ba00"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView_gotologin"
@@ -134,4 +147,3 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/signup_made_by_butterfly_effect" />
     </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
