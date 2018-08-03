@@ -1,18 +1,13 @@
 package com.example.shawn.anjeonmingug
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-
-import net.daum.mf.map.api.MapView
 import android.widget.RelativeLayout
-import android.view.ViewGroup
-import net.daum.mf.map.api.MapView.MapViewEventListener
+import net.daum.mf.map.api.MapView
 
 
-class HomeActivity() : AppCompatActivity(){
+class HomeActivity() : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +15,7 @@ class HomeActivity() : AppCompatActivity(){
         setContentView(R.layout.activity_home)
 
         val mapView = MapView(this)
-        mapView.setDaumMapApiKey("d75b37b88a66fea4c1b561f042400150")
+        mapView.setDaumMapApiKey("6f504f9b73ad280372b2aff0036b6f32")
 
         val container = findViewById<View>(R.id.map_view) as RelativeLayout
         container.addView(mapView)

@@ -10,9 +10,10 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,13 +29,177 @@
     <include
         android:id="@+id/include"
         layout="@layout/content_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.143"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.096" />
+
+    <ImageView
+        android:id="@+id/main_title"
+        android:layout_width="117dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="396dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="173dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:srcCompat="@drawable/main_anjeonmingug" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="332dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="267dp"
+        android:ems="10"
+        android:hint="아이디 또는 email 주소"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_password"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
+
+    <ImageView
+        android:id="@+id/button_login"
+        android:layout_width="331dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_password"
+        app:srcCompat="@drawable/main_login_background" />
+
+    <TextView
+        android:id="@+id/textView_login"
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="로그인"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_login"
+        app:layout_constraintEnd_toEndOf="@+id/button_login"
+        app:layout_constraintStart_toStartOf="@+id/button_login"
+        app:layout_constraintTop_toTopOf="@+id/button_login"
+        tools:text="로그인" />
+
+    <ImageView
+        android:id="@+id/button_google"
+        android:layout_width="331dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_login"
+        app:srcCompat="@drawable/main_google_background" />
+
+    <TextView
+        android:id="@+id/textView_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="Google"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_google"
+        app:layout_constraintEnd_toEndOf="@+id/button_google"
+        app:layout_constraintStart_toStartOf="@+id/button_google"
+        app:layout_constraintTop_toBottomOf="@+id/button_login"
+        tools:text="Google" />
+
+    <TextView
+        android:id="@+id/button_forgetpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="135dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="23dp"
+        android:gravity="center"
+        android:text="Forget Password"
+        android:textColor="#f0ba00"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_google"
+        tools:text="Forget Password" />
+
+    <TextView
+        android:id="@+id/button_gotologin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="Don’t have accounted?"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/button_getstarted"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_forgetpassword"
+        tools:text="Don’t have accounted?" />
+
+    <TextView
+        android:id="@+id/button_getstarted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:gravity="center"
+        android:text="Get started"
+        android:textColor="#f0ba00"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_gotologin"
+        app:layout_constraintTop_toTopOf="@+id/button_gotologin"
+        tools:text="Get started" />
+
+    <ImageView
+        android:id="@+id/main_source"
+        android:layout_width="160dp"
+        android:layout_height="13dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="195dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/main_made_by_butterfly_effect" />
 
 </android.support.constraint.ConstraintLayout>

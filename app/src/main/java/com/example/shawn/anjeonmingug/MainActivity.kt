@@ -3,20 +3,17 @@ package com.example.shawn.anjeonmingug
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import android.util.Base64.NO_WRAP
-import android.provider.SyncStateContract.Helpers.update
 import android.content.pm.PackageManager
-import android.content.pm.PackageInfo
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -25,6 +22,7 @@ import java.security.NoSuchAlgorithmException
 
 
 class MainActivity : AppCompatActivity() {
+
     fun getKeyHash(context: Context): String? {
         val manager = context.getPackageManager()
         val info = manager?.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES)
@@ -52,6 +50,25 @@ class MainActivity : AppCompatActivity() {
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }
+        button_getstarted.setOnClickListener {
+            var SignupActivity = Intent(this, SignupActivity::class.java)
+            startActivity(SignupActivity)
+
+        }
+
+        textView_login.bringToFront()
+        textView_google.bringToFront()
+    }
+    fun createEmailId(){
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
