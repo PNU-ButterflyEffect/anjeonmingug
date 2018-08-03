@@ -26,6 +26,6 @@
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
     </uses-permission>
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="d75b37b88a66fea4c1b561f042400150"/>
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="6f504f9b73ad280372b2aff0036b6f32"/>
 
 </manifest>
