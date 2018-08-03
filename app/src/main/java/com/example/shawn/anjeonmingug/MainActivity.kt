@@ -3,22 +3,17 @@ package com.example.shawn.anjeonmingug
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import android.util.Base64.NO_WRAP
-import android.provider.SyncStateContract.Helpers.update
 import android.content.pm.PackageManager
-import android.content.pm.PackageInfo
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -55,8 +50,9 @@ class MainActivity : AppCompatActivity() {
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }
-        textView2.bringToFront()
-        textView6.bringToFront()
+
+        textView_login.bringToFront()
+        textView_google.bringToFront()
     }
     fun createEmailId(){
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())

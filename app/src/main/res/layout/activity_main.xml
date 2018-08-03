@@ -39,7 +39,7 @@
         app:layout_constraintVertical_bias="0.096" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/main_title"
         android:layout_width="117dp"
         android:layout_height="31dp"
         android:layout_marginBottom="396dp"
@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:srcCompat="@drawable/anjeonmingug" />
+        app:srcCompat="@drawable/main_anjeonmingug" />
 
     <EditText
         android:id="@+id/editText_email"
@@ -64,7 +64,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/main_title" />
 
     <EditText
         android:id="@+id/editText_password"
@@ -90,10 +90,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_password"
-        app:srcCompat="@drawable/login_background" />
+        app:srcCompat="@drawable/main_login_background" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_login"
         android:layout_width="wrap_content"
         android:layout_height="12dp"
         android:layout_marginBottom="8dp"
@@ -110,7 +110,7 @@
         tools:text="로그인" />
 
     <ImageView
-        android:id="@+id/button_signup"
+        android:id="@+id/button_google"
         android:layout_width="331dp"
         android:layout_height="42dp"
         android:layout_marginEnd="15dp"
@@ -118,11 +118,11 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/google_background" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_login"
+        app:srcCompat="@drawable/main_google_background" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -133,14 +133,14 @@
         android:textColor="#ffffff"
         android:textSize="12sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_signup"
-        app:layout_constraintEnd_toEndOf="@+id/button_signup"
-        app:layout_constraintStart_toStartOf="@+id/button_signup"
+        app:layout_constraintBottom_toBottomOf="@+id/button_google"
+        app:layout_constraintEnd_toEndOf="@+id/button_google"
+        app:layout_constraintStart_toStartOf="@+id/button_google"
         app:layout_constraintTop_toBottomOf="@+id/button_login"
         tools:text="Google" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/button_forgetpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="135dp"
@@ -151,26 +151,23 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_signup"
+        app:layout_constraintTop_toBottomOf="@+id/button_google"
         tools:text="Forget Password" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/button_gotologin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:textColor="#000000"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/button_forgetpassword"
+        tools:layout_editor_absoluteX="98dp"
         tools:text="Don’t have accounted?" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/button_getstarted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
@@ -180,26 +177,20 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintStart_toEndOf="@+id/button_gotologin"
+        app:layout_constraintTop_toTopOf="@+id/button_gotologin"
         tools:text="Get started" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/main_source"
         android:layout_width="160dp"
         android:layout_height="13dp"
         android:layout_marginBottom="7dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="195dp"
-        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/made_by_butterfly_effect" />
+        app:srcCompat="@drawable/main_made_by_butterfly_effect" />
 
-    <android.support.constraint.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>
