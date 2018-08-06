@@ -1,25 +1,24 @@
 package com.example.shawn.anjeonmingug
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.location.LocationProvider
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-
-import net.daum.mf.map.api.MapView
 import android.widget.RelativeLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 
 class HomeActivity() : AppCompatActivity(), LocationListener {
     var latitude : Double? = null
@@ -58,6 +57,13 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        //로그아웃
+        button_logout.setOnClickListener {
+
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         // 권한 확인
