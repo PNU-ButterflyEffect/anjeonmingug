@@ -3,20 +3,17 @@ package com.example.shawn.anjeonmingug
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import android.util.Base64.NO_WRAP
-import android.provider.SyncStateContract.Helpers.update
 import android.content.pm.PackageManager
-import android.content.pm.PackageInfo
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -52,6 +49,27 @@ class MainActivity : AppCompatActivity() {
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }
+        //회원가입창 넘어가기
+        button_getstarted.setOnClickListener {
+            var signupActivity = Intent(this, SignupActivity::class.java)
+            startActivity(signupActivity)
+
+        }
+        //로그인 기능
+        button_login.setOnClickListener {
+            loginId()
+        }
+    }
+    fun loginId(){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(this, HomeActivity::class.java))
+                    }else{
+                        Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
