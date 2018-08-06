@@ -13,7 +13,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -43,12 +42,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //setSupportActionBar(toolbar)
         println("///////     " + getKeyHash(this))
-        loginvirtual.setOnClickListener{
-            var homeActivity = Intent(this, HomeActivity::class.java)
-            startActivity(homeActivity)
-        }
+
         //회원가입창
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)

@@ -23,6 +23,10 @@ class SignupActivity : AppCompatActivity() {
         button_signup.setOnClickListener {
             createEmailId()
         }
+        button_gotologin.setOnClickListener {
+            var MainActivity = Intent(this, MainActivity::class.java)
+            startActivity(MainActivity)
+        }
 
     }
     fun createEmailId() {
