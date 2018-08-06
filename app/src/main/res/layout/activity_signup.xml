@@ -6,55 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".SignupActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintDimensionRatio=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#3447b5"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
     <ImageView
-            android:id="@+id/signup_title"
-            android:layout_width="117dp"
-            android:layout_height="31dp"
-            android:layout_marginBottom="396dp"
-            android:layout_marginEnd="121dp"
-            android:layout_marginStart="122dp"
-            android:layout_marginTop="173dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/signup_anjeonmingug" />
+        android:id="@+id/signup_title"
+        android:layout_width="117dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="396dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/signup_anjeonmingug" />
 
     <EditText
         android:id="@+id/editText_name"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="342dp"
+        android:layout_marginBottom="332dp"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="이름"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_title" />
 
     <EditText
             android:id="@+id/editText_email"

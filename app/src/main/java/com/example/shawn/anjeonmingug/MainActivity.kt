@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        //setSupportActionBar(toolbar)
         println("///////     " + getKeyHash(this))
         loginvirtual.setOnClickListener{
             var homeActivity = Intent(this, HomeActivity::class.java)
