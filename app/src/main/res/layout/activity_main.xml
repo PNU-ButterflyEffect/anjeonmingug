@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/main_title"
         android:layout_width="117dp"
@@ -91,7 +81,7 @@
         app:layout_constraintTop_toTopOf="@+id/button_login"
         tools:text="로그인" />
 
-    <ImageView
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/button_google"
         android:layout_width="331dp"
         android:layout_height="42dp"
@@ -102,25 +92,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_login"
         app:srcCompat="@drawable/main_google_background" />
-
-    <TextView
-        android:id="@+id/textView_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
-        android:text="Google"
-        android:textColor="#ffffff"
-        android:textSize="12sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_google"
-        app:layout_constraintEnd_toEndOf="@+id/button_google"
-        app:layout_constraintStart_toStartOf="@+id/button_google"
-        app:layout_constraintTop_toBottomOf="@+id/button_login"
-        tools:text="Google" />
 
     <TextView
         android:id="@+id/button_forgetpassword"

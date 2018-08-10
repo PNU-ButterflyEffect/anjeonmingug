@@ -8,20 +8,17 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignupActivity : AppCompatActivity() {
-    var authStateListener: FirebaseAuth.AuthStateListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-        //로그인 세션을 체크하는 부분
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //세션
-            var user = firebaseAuth.currentUser
-            if (user != null) {
-                startActivity(Intent(this, HomeActivity::class.java))
-            }
-        }
+
         button_signup.setOnClickListener {
             createEmailId()
+        }
+        button_gotologin.setOnClickListener {
+            var MainActivity = Intent(this, MainActivity::class.java)
+            startActivity(MainActivity)
         }
 
     }
@@ -38,13 +35,5 @@ class SignupActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        FirebaseAuth.getInstance().addAuthStateListener(authStateListener!!)
-    }
 
-    override fun onStop() {
-        super.onStop()
-        FirebaseAuth.getInstance().removeAuthStateListener(authStateListener!!)
-    }
 }
