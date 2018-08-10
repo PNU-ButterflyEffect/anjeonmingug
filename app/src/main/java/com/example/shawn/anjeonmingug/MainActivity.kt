@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
@@ -43,9 +44,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // push notification setup
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
         //setSupportActionBar(toolbar)
         println("///////     " + getKeyHash(this))
-        loginvirtual.setOnClickListener{
+        virtualBtn.setOnClickListener{
             var homeActivity = Intent(this, HomeActivity::class.java)
             startActivity(homeActivity)
         }

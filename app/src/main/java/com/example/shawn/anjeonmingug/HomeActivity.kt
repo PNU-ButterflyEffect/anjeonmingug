@@ -58,11 +58,12 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         //로그아웃
-        button_logout.setOnClickListener {
+        /*button_logout.setOnClickListener {
 
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
-        }
+        }*/
+
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -88,6 +89,9 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
 
         // gps 아이콘 최상단으로 위치
         gps_icon.bringToFront()
+        searchBar.bringToFront()
+        menubar.bringToFront()
+        searchBtn.bringToFront()
 
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){

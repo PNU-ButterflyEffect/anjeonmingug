@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true">
+        android:layout_alignParentTop="false">
 
         <ImageView
             android:id="@+id/gps_icon"
@@ -20,27 +21,39 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="17dp"
             android:layout_marginEnd="12dp"
+            android:foregroundGravity="top"
             app:srcCompat="@drawable/gps" />
 
-        <TextView
-            android:id="@+id/textView"
+        <ImageView
+            android:id="@+id/searchBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+
+            android:layout_height="31dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="31dp"
+            android:paddingTop="0dp"
+
+            app:srcCompat="@drawable/searchbar" />
+
+        <ImageView
+            android:id="@+id/menubar"
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="31dp"
+            
+            app:srcCompat="@drawable/menu" />
+
+        <ImageView
+            android:id="@+id/searchBtn"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="64dp"
-            android:layout_marginEnd="149dp"
-            android:text="TextView" />
+            android:layout_marginTop="31dp"
+            app:srcCompat="@drawable/searchbutton" />
+
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/button_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Logout" />
-
 
 
 </RelativeLayout>
