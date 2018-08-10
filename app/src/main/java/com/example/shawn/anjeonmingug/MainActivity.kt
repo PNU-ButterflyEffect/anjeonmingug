@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         println("///////     " + getKeyHash(this))
 
+
         //로그인 세션을 체크하는 부분
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             //세션
@@ -88,6 +89,9 @@ class MainActivity : AppCompatActivity() {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)
         }
+
+
+
     }
     fun loginId(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
@@ -147,4 +151,5 @@ class MainActivity : AppCompatActivity() {
                     }
         }
     }
+
 }
