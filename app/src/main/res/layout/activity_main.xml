@@ -5,6 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".MainActivity">
 
     <ImageView
@@ -14,7 +15,7 @@
         android:layout_marginBottom="396dp"
         android:layout_marginEnd="121dp"
         android:layout_marginStart="122dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +29,7 @@
         android:layout_marginBottom="332dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="아이디 또는 email 주소"
         android:inputType="textEmailAddress"
@@ -66,32 +67,20 @@
     <TextView
         android:id="@+id/textView_login"
         android:layout_width="wrap_content"
-        android:layout_height="12dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:text="로그인"
         android:textColor="#ffffff"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/button_login"
         app:layout_constraintEnd_toEndOf="@+id/button_login"
         app:layout_constraintStart_toStartOf="@+id/button_login"
         app:layout_constraintTop_toTopOf="@+id/button_login"
         tools:text="로그인" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/button_google"
-        android:layout_width="331dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_login"
-        app:srcCompat="@drawable/main_google_background" />
 
     <TextView
         android:id="@+id/button_forgetpassword"
@@ -151,4 +140,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/main_made_by_butterfly_effect" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/button_google"
+        android:layout_width="331dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_login"
+        app:srcCompat="@drawable/main_google_background">
+
+    </com.google.android.gms.common.SignInButton>
+
 </android.support.constraint.ConstraintLayout>

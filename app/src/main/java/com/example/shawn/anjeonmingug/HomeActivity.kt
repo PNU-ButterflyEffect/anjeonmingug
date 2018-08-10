@@ -80,8 +80,11 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         val container = findViewById<View>(R.id.map_view) as RelativeLayout
         container.addView(mapView)
 
-        // gps 아이콘 최상단으로 위치
+        // 최상단으로 위치
         gps_icon.bringToFront()
+        button_menu.bringToFront()
+        editText_search.bringToFront()
+        button_search.bringToFront()
 
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){
