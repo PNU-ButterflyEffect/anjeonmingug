@@ -14,7 +14,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -50,12 +49,9 @@ class MainActivity : AppCompatActivity() {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
-        //setSupportActionBar(toolbar)
+
         println("///////     " + getKeyHash(this))
-        virtualBtn.setOnClickListener{
-            var homeActivity = Intent(this, HomeActivity::class.java)
-            startActivity(homeActivity)
-        }
+
         //회원가입창
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)

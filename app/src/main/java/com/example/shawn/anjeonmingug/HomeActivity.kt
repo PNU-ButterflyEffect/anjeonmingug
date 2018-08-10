@@ -89,9 +89,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
 
         // gps 아이콘 최상단으로 위치
         gps_icon.bringToFront()
-        searchBar.bringToFront()
-        menubar.bringToFront()
-        searchBtn.bringToFront()
 
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){

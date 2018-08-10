@@ -24,35 +24,6 @@
             android:foregroundGravity="top"
             app:srcCompat="@drawable/gps" />
 
-        <ImageView
-            android:id="@+id/searchBar"
-            android:layout_width="wrap_content"
-
-            android:layout_height="31dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="31dp"
-            android:paddingTop="0dp"
-
-            app:srcCompat="@drawable/searchbar" />
-
-        <ImageView
-            android:id="@+id/menubar"
-            android:layout_width="wrap_content"
-            android:layout_height="31dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="31dp"
-            
-            app:srcCompat="@drawable/menu" />
-
-        <ImageView
-            android:id="@+id/searchBtn"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="31dp"
-            app:srcCompat="@drawable/searchbutton" />
-
     </RelativeLayout>
 
 
