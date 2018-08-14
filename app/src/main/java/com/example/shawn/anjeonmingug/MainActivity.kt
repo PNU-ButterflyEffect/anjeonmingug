@@ -18,6 +18,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import com.onesignal.OneSignal
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -48,17 +49,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        println("///////     " + getKeyHash(this))
 
+        // push notification setup
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
-        //로그인 세션을 체크하는 부분
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //세션
-            var user = firebaseAuth.currentUser
-            if (user != null) {
-                startActivity(Intent(this, HomeActivity::class.java))
+        OneSignal.idsAvailable { userId, registrationId ->
+            Log.d("debug", "User:$userId")
+            if (registrationId != null)
+                Log.d("debug", "registrationId:$registrationId")
             }
-        }
+        //println("///////     " + getKeyHash(this))
 
         //구글 로그인 옵션
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -78,7 +81,6 @@ class MainActivity : AppCompatActivity() {
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
-
         }
         //로그인
         button_login.setOnClickListener {

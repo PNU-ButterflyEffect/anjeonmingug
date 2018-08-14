@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "200588151772",
-    "firebase_url": "https://anjeonmingug.firebaseio.com",
-    "project_id": "anjeonmingug",
-    "storage_bucket": "anjeonmingug.appspot.com"
+    "project_number": "934738911166",
+    "firebase_url": "https://anjeonmingug-f7d32.firebaseio.com",
+    "project_id": "anjeonmingug-f7d32",
+    "storage_bucket": "anjeonmingug-f7d32.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:200588151772:android:45a9c594b9fd2027",
+        "mobilesdk_app_id": "1:934738911166:android:45a9c594b9fd2027",
         "android_client_info": {
           "package_name": "com.example.shawn.anjeonmingug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "200588151772-qn30mvrtcf4p4l8dsd7kpm00jca1lane.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.shawn.anjeonmingug",
-            "certificate_hash": "2bb0038f12d7020b4b8d457cd9d7c2f4602b0c0c"
-          }
-        },
-        {
-          "client_id": "200588151772-57ecsh263kffudcg53vr7k9ba4jgqlv8.apps.googleusercontent.com",
+          "client_id": "934738911166-eld7t6j8ak3s3oilnd14dgipmdnpfffo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCIQ6huju7uw3VTlb3S8wceDA8l4-RPaqw"
+          "current_key": "AIzaSyCP_KM2m3hWm5RijORSiYwkXrSDOPI6sBc"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "200588151772-57ecsh263kffudcg53vr7k9ba4jgqlv8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

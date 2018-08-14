@@ -32,12 +32,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         latitude = p0!!.latitude
         longitude = p0!!.longitude
         this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
-
-
-
     }
-
-
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
     }
@@ -56,6 +51,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        /*button_logout.setOnClickListener {
+
 
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -116,7 +113,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         if(requestCode == 0)
             getLocation()
     }
-
 }
 
 
