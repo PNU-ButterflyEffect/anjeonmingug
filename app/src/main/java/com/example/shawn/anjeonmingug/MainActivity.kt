@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        FirebaseAuth.getInstance().signOut() // test case
         // push notification setup
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
@@ -62,6 +62,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d("debug", "registrationId:$registrationId")
             }
         //println("///////     " + getKeyHash(this))
+
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            //세션
+            var user = firebaseAuth.currentUser
+            if (user != null) {
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+        }
 
         //구글 로그인 옵션
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

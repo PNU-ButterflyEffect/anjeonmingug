@@ -54,7 +54,9 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         /*button_logout.setOnClickListener {
 
 
-
+        FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }*/
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         // 권한 확인

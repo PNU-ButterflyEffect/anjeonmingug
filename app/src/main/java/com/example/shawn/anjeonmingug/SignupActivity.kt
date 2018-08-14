@@ -21,14 +21,16 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         println("onCreate---------------------------------------")
         setContentView(R.layout.activity_signup)
+
+        // 회원가입 들어오면 세션을 죽임
+        FirebaseAuth.getInstance().signOut()
         //로그인 세션을 체크하는 부분
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             //세션
             var user = firebaseAuth.currentUser
-            if(this.i > 0)
-                if (user != null) {
-                    startActivity(Intent(this, HomeActivity::class.java))
-                }
+            if (user != null) {
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
         }
         button_signup.setOnClickListener {
             println("onCreate")
