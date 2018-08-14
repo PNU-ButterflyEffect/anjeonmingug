@@ -33,12 +33,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         latitude = p0!!.latitude
         longitude = p0!!.longitude
         this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
-
-
-
     }
-
-
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
     }
@@ -114,7 +109,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         if(requestCode == 0)
             getLocation()
     }
-
 }
 
 

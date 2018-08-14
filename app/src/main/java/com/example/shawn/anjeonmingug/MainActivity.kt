@@ -50,13 +50,17 @@ class MainActivity : AppCompatActivity() {
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
 
-        println("///////     " + getKeyHash(this))
+        OneSignal.idsAvailable { userId, registrationId ->
+            Log.d("debug", "User:$userId")
+            if (registrationId != null)
+                Log.d("debug", "registrationId:$registrationId")
+        }
+        //println("///////     " + getKeyHash(this))
 
         //회원가입창
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
-
         }
         //로그인
         button_login.setOnClickListener {
