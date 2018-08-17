@@ -17,8 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_main.*
 import com.onesignal.OneSignal
+import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -63,13 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         //println("///////     " + getKeyHash(this))
 
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //세션
-            var user = firebaseAuth.currentUser
-            if (user != null) {
-                startActivity(Intent(this, HomeActivity::class.java))
-            }
-        }
+
 
         //구글 로그인 옵션
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -99,7 +93,13 @@ class MainActivity : AppCompatActivity() {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)
         }
-
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            //세션
+            var user = firebaseAuth.currentUser
+            if (user != null) {
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+        }
 
 
     }
