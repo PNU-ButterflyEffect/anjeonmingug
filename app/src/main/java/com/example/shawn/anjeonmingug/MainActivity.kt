@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
     }
     fun loginId(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
