@@ -64,7 +64,7 @@ class SignupActivity : AppCompatActivity() {
                 this.name = name
                 this.email = email
                 this.pass = pass
-                this.playerId = ""
+                this.playerId = playerId
                 this.date = TIMESTAMP
             }
         }
