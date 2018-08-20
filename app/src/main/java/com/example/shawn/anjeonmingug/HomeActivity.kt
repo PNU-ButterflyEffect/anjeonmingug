@@ -3,14 +3,18 @@ package com.example.shawn.anjeonmingug
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -18,11 +22,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.content_main.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import java.sql.Types.TIMESTAMP
 
-class HomeActivity() : AppCompatActivity(), LocationListener {
+class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener {
     var latitude : Double? = null
     var longitude : Double? = null
     var mapView : MapView? = null
@@ -77,6 +82,16 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        setSupportActionBar(button_menu)
+
+
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        nav_view.setNavigationItemSelectedListener(this)
+
         /*button_logout.setOnClickListener {
         FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
@@ -114,11 +129,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
         }
 
-        //MENU 기능
-        button_menu.setOnClickListener {
-
-            startActivity(Intent(this, MenuActivity::class.java))
-        }
     }
 
     // GPS, NETWORK로 위치 가져오기
@@ -138,6 +148,56 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == 0)
             getLocation()
+    }
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.home, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        when (item.itemId) {
+            R.id.action_settings -> return true
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // Handle navigation view item clicks here.
+        when (item.itemId) {
+            R.id.nav_camera -> {
+                // Handle the camera action
+            }
+            R.id.nav_gallery -> {
+
+            }
+            R.id.nav_slideshow -> {
+
+            }
+            R.id.nav_manage -> {
+
+            }
+            R.id.nav_share -> {
+
+            }
+            R.id.nav_send -> {
+
+            }
+        }
+
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
     }
 }
 
