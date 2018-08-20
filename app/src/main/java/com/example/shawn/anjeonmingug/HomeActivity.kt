@@ -15,22 +15,49 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import java.sql.Types.TIMESTAMP
 
 class HomeActivity() : AppCompatActivity(), LocationListener {
     var latitude : Double? = null
     var longitude : Double? = null
     var mapView : MapView? = null
+    var database = FirebaseDatabase.getInstance()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    // firebase realtime database를 위한 데이터베이스 table
+    private fun appendLocation(latitude: Double, longitude: Double) {
+        class UserLocation {
+            var key : String
+            var latitude: Double
+            var longitude: Double
+            var date : Any
+
+            constructor(key : String, latitude: Double, longitude: Double) {
+                this.key = key
+                this.latitude = latitude
+                this.longitude = longitude
+                this.date = TIMESTAMP
+            }
+        }
+
+        var currentUser = FirebaseAuth.getInstance().currentUser
+        var key = currentUser!!.uid
+        var myRef = database.getReference()
+        val userLocation =UserLocation(key!!, latitude, longitude)
+        myRef.child("UserLocation").child(key!!).push().setValue(userLocation)
+    }
+
+    // 위치가 바뀔 때마다 실행
     override fun onLocationChanged(p0: Location?) {
-        //println(p0!!.latitude)
-        //println(p0!!.longitude)
         latitude = p0!!.latitude
         longitude = p0!!.longitude
+        appendLocation(latitude!!, longitude!!)
         this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
     }
 
@@ -38,7 +65,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
     }
 
     override fun onProviderEnabled(p0: String?) {
-
     }
 
     override fun onProviderDisabled(p0: String?) {
@@ -52,8 +78,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         /*button_logout.setOnClickListener {
-
-
         FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
         }*/
@@ -66,9 +90,9 @@ class HomeActivity() : AppCompatActivity(), LocationListener {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
-
                     this.latitude = location!!.latitude
                     this.longitude = location!!.longitude
+                    appendLocation(this.latitude!!, this.longitude!!)
                     this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
                 }
 

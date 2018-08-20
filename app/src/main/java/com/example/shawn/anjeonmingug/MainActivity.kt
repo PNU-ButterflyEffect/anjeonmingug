@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
@@ -17,14 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
-import com.onesignal.OneSignal
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-
-
-
-
 
 class MainActivity : AppCompatActivity() {
     fun getKeyHash(context: Context): String? {
@@ -50,8 +47,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseAuth.getInstance().signOut() // test case
+        var service = Intent(this, MyService:: class.java)
+        startService(service);
+
         // push notification setup
-        OneSignal.startInit(this)
+        /*OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("debug", "User:$userId")
             if (registrationId != null)
                 Log.d("debug", "registrationId:$registrationId")
-            }
+            }*/
         //println("///////     " + getKeyHash(this))
 
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -99,9 +99,6 @@ class MainActivity : AppCompatActivity() {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)
         }
-
-
-
     }
     fun loginId(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
