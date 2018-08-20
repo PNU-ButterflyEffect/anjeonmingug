@@ -85,6 +85,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         setSupportActionBar(button_menu)
 
 
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -92,10 +93,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        /*button_logout.setOnClickListener {
-        FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this, MainActivity::class.java))
-        }*/
+
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         // 권한 확인
@@ -176,18 +174,16 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_bookmark -> {
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
+            R.id.nav_notice -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_option -> {
 
             }
-            R.id.nav_manage -> {
 
-            }
             R.id.nav_share -> {
 
             }

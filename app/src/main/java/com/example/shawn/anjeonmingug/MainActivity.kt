@@ -65,26 +65,26 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //구� 로그�션
+        //êµ¬ê ë¡œê·¸µì…˜
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        //구� 로그�래�� 만듬
+        //êµ¬ê ë¡œê·¸´ëž˜¤ë ë§Œë“¬
         var googleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        //비�번호 찾기
+        //ë¹„ëë²ˆí˜¸ ì°¾ê¸°
         button_forgetpassword.setOnClickListener {
             var FindPasswordActivity = Intent(this, FindPasswordActivity::class.java)
             startActivity(FindPasswordActivity)
         }
 
-        //�원가�창
+        //Œì›ê°€…ì°½
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
         }
-        //로그
+        //ë¡œê·¸
         button_login.setOnClickListener {
             loginId()
         }
@@ -94,18 +94,19 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(signInIntent, 1)
         }
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //�션
+            //¸ì…˜
             var user = firebaseAuth.currentUser
             if (user != null) {
                 startActivity(Intent(this, HomeActivity::class.java))
             }
         }
+
     }
     fun loginId(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "로그�에 �공��니", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "ë¡œê·¸¸ì— ±ê³µ˜ìµë‹ˆ", Toast.LENGTH_LONG).show()
                         startActivity(Intent(this, HomeActivity::class.java))
                     }else{
                         Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
@@ -141,18 +142,18 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-            //구� 로그�에 �공�을�어�는 �큰 값을 가지곈는 Task
+            //êµ¬ê ë¡œê·¸¸ì— ±ê³µˆì„˜ì–´¤ëŠ”  í° ê°’ì„ ê°€ì§€ê³ˆëŠ” Task
             var  task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            //ApiException 캐스
+            //ApiException ìºìŠ¤
             var account = task.getResult(ApiException::class.java)
-            //Credential 구� 로그�에 �공�다�증
+            //Credential êµ¬ê ë¡œê·¸¸ì— ±ê³µˆë‹¤¸ì¦
             var credential = GoogleAuthProvider.getCredential(account.idToken,null)
-            //�이�베�스구� �용�록
+            //Œì´´ë² ´ìŠ¤êµ¬ê ¬ìš©±ë¡
             FirebaseAuth.getInstance().signInWithCredential(credential)
                     .addOnCompleteListener {
                         task ->
                         if(task.isSuccessful){
-                            Toast.makeText(this, "구� �이�동�공��니",Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "êµ¬ê „ì´°ë™±ê³µ˜ìµë‹ˆ",Toast.LENGTH_LONG).show()
                         }else{
                             Toast.makeText(this,task.exception.toString(),Toast.LENGTH_LONG).show()
                         }
