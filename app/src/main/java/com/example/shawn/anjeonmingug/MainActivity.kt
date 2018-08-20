@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
@@ -17,14 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.onesignal.OneSignal
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-
-
-
-
 
 class MainActivity : AppCompatActivity() {
     fun getKeyHash(context: Context): String? {
@@ -50,8 +47,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseAuth.getInstance().signOut() // test case
+        var service = Intent(this, MyService:: class.java)
+        startService(service);
+
         // push notification setup
-        OneSignal.startInit(this)
+        /*OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
@@ -60,31 +60,31 @@ class MainActivity : AppCompatActivity() {
             Log.d("debug", "User:$userId")
             if (registrationId != null)
                 Log.d("debug", "registrationId:$registrationId")
-            }
+            }*/
         //println("///////     " + getKeyHash(this))
 
 
 
-        //구글 로그인 옵션
+        //êµ¬ê ë¡œê·¸µì…˜
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        //구글 로그인 클래스를 만듬
+        //êµ¬ê ë¡œê·¸´ëž˜¤ë ë§Œë“¬
         var googleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        //비밀번호 찾기
+        //ë¹„ëë²ˆí˜¸ ì°¾ê¸°
         button_forgetpassword.setOnClickListener {
             var FindPasswordActivity = Intent(this, FindPasswordActivity::class.java)
             startActivity(FindPasswordActivity)
         }
 
-        //회원가입창
+        //Œì›ê°€…ì°½
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
         }
-        //로그인
+        //ë¡œê·¸
         button_login.setOnClickListener {
             loginId()
         }
@@ -94,21 +94,19 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(signInIntent, 1)
         }
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //세션
+            //¸ì…˜
             var user = firebaseAuth.currentUser
             if (user != null) {
                 startActivity(Intent(this, HomeActivity::class.java))
             }
         }
 
-
-
     }
     fun loginId(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "ë¡œê·¸¸ì— ±ê³µ˜ìµë‹ˆ", Toast.LENGTH_LONG).show()
                         startActivity(Intent(this, HomeActivity::class.java))
                     }else{
                         Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
@@ -144,18 +142,18 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-            //구글 로그인에 성공했을때 넘어오는 토큰 값을 가지고 있는 Task
+            //êµ¬ê ë¡œê·¸¸ì— ±ê³µˆì„˜ì–´¤ëŠ”  í° ê°’ì„ ê°€ì§€ê³ˆëŠ” Task
             var  task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            //ApiException 캐스팅
+            //ApiException ìºìŠ¤
             var account = task.getResult(ApiException::class.java)
-            //Credential 구글 로그인에 성공했다는 인증서
+            //Credential êµ¬ê ë¡œê·¸¸ì— ±ê³µˆë‹¤¸ì¦
             var credential = GoogleAuthProvider.getCredential(account.idToken,null)
-            //파이어베이스에 구글 사용자 등록
+            //Œì´´ë² ´ìŠ¤êµ¬ê ¬ìš©±ë¡
             FirebaseAuth.getInstance().signInWithCredential(credential)
                     .addOnCompleteListener {
                         task ->
                         if(task.isSuccessful){
-                            Toast.makeText(this, "구글 아이디 연동이 성공하였습니다.",Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "êµ¬ê „ì´°ë™±ê³µ˜ìµë‹ˆ",Toast.LENGTH_LONG).show()
                         }else{
                             Toast.makeText(this,task.exception.toString(),Toast.LENGTH_LONG).show()
                         }
