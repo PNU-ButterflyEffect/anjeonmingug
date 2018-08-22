@@ -3,6 +3,7 @@ package com.example.shawn.anjeonmingug
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.location.Location
@@ -191,7 +192,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
             }
             R.id.nav_option -> {
-
+                var SettingActivity = Intent(this, SettingActivity::class.java)
+                startActivity(SettingActivity)
             }
 
             R.id.nav_share -> {

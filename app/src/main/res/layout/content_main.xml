@@ -19,6 +19,7 @@
         android:layout_marginEnd="307dp"
         android:layout_marginStart="13dp"
         android:background="@drawable/searchbar_1"
+        android:foreground="@drawable/searchbar_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
