@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import java.sql.Types.TIMESTAMP
+import java.util.*
 
 class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener {
     var latitude : Double? = null
@@ -41,13 +43,17 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             var key : String
             var latitude: Double
             var longitude: Double
-            var date : Any
+            var createdTime : Any
 
             constructor(key : String, latitude: Double, longitude: Double) {
                 this.key = key
                 this.latitude = latitude
                 this.longitude = longitude
-                this.date = TIMESTAMP
+                val now = System.currentTimeMillis()
+                val date = Date(now)
+                val sdf = SimpleDateFormat("yyyy-MM-dd : hh-mm-ss")
+                val getTime = sdf.format(date)
+                this.createdTime = getTime
             }
         }
 

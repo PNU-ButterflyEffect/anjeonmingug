@@ -1,6 +1,7 @@
 package com.example.shawn.anjeonmingug
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat.startActivity
@@ -17,9 +18,7 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.internal.FirebaseAppHelper.getUid
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.iid.FirebaseInstanceId
-
-
-
+import java.util.*
 
 
 class SignupActivity : AppCompatActivity() {
@@ -57,7 +56,7 @@ class SignupActivity : AppCompatActivity() {
             var email: String
             var pass : String
             var playerId : String
-            var date : Any
+            var createdTime : Any
 
             constructor(key:String, name: String, email: String, pass: String, playerId : String) {
                 this.key = key
@@ -65,7 +64,11 @@ class SignupActivity : AppCompatActivity() {
                 this.email = email
                 this.pass = pass
                 this.playerId = playerId
-                this.date = TIMESTAMP
+                val now = System.currentTimeMillis()
+                val date = Date(now)
+                val sdf = SimpleDateFormat("yyyy-MM-dd : hh-mm-ss")
+                val getTime = sdf.format(date)
+                this.createdTime = getTime
             }
         }
 
