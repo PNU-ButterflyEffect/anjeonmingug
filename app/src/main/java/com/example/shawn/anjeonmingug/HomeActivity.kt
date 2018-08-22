@@ -66,10 +66,15 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
     // 위치가 바뀔 때마다 실행
     override fun onLocationChanged(p0: Location?) {
-        latitude = p0!!.latitude
-        longitude = p0!!.longitude
-        appendLocation(latitude!!, longitude!!)
-        this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+        if(latitude == p0!!.latitude && longitude == p0!!.longitude){
+            println("same place!");
+        } else {
+            latitude = p0!!.latitude
+            longitude = p0!!.longitude
+            appendLocation(latitude!!, longitude!!)
+            this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+        }
+
     }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
