@@ -65,26 +65,26 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //êµ¬ê ë¡œê·¸µì…˜
+        //구글 로그인 옵션
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
-        //êµ¬ê ë¡œê·¸´ëž˜¤ë ë§Œë“¬
+        //구글 로그인 클래스를 만듬
         var googleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        //ë¹„ëë²ˆí˜¸ ì°¾ê¸°
+        //비밀번호 찾기
         button_forgetpassword.setOnClickListener {
             var FindPasswordActivity = Intent(this, FindPasswordActivity::class.java)
             startActivity(FindPasswordActivity)
         }
 
-        //Œì›ê°€…ì°½
+        //회원가입창
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
         }
-        //ë¡œê·¸
+        //로그인
         button_login.setOnClickListener {
             loginId()
         }
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(signInIntent, 1)
         }
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //¸ì…˜
+            //세션
             var user = firebaseAuth.currentUser
             if (user != null) {
                 startActivity(Intent(this, HomeActivity::class.java))
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(editText_email.text.toString(),editText_password.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "ë¡œê·¸¸ì— ±ê³µ˜ìµë‹ˆ", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_LONG).show()
                         startActivity(Intent(this, HomeActivity::class.java))
                     }else{
                         Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
@@ -142,18 +142,18 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-            //êµ¬ê ë¡œê·¸¸ì— ±ê³µˆì„˜ì–´¤ëŠ”  í° ê°’ì„ ê°€ì§€ê³ˆëŠ” Task
+            //구글 로그인에 성공했을때 넘어오는 토큰 값을 가지고 있는 Task
             var  task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            //ApiException ìºìŠ¤
+            //ApiException 캐스팅
             var account = task.getResult(ApiException::class.java)
-            //Credential êµ¬ê ë¡œê·¸¸ì— ±ê³µˆë‹¤¸ì¦
+            //Credential 구글 로그인에 성공했다는 인증서
             var credential = GoogleAuthProvider.getCredential(account.idToken,null)
-            //Œì´´ë² ´ìŠ¤êµ¬ê ¬ìš©±ë¡
+            //파이어베이스에 구글 사용자 등록
             FirebaseAuth.getInstance().signInWithCredential(credential)
                     .addOnCompleteListener {
                         task ->
                         if(task.isSuccessful){
-                            Toast.makeText(this, "êµ¬ê „ì´°ë™±ê³µ˜ìµë‹ˆ",Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "구글 아이디 연동이 성공하였습니다.",Toast.LENGTH_LONG).show()
                         }else{
                             Toast.makeText(this,task.exception.toString(),Toast.LENGTH_LONG).show()
                         }

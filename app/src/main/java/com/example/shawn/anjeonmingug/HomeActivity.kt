@@ -74,7 +74,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             appendLocation(latitude!!, longitude!!)
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
         }
-
     }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
