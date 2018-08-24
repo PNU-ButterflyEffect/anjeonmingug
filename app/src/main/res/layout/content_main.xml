@@ -38,6 +38,7 @@
         android:background="@drawable/searchbar_2"
         android:ems="10"
         android:inputType="textPersonName"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_menu"
         app:layout_constraintTop_toTopOf="parent"

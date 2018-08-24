@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseAuth.getInstance().signOut() // test case
-        var service = Intent(this, MyService:: class.java)
-        startService(service);
+        //var service = Intent(this, MyService:: class.java)
+        //startService(service);
 
         // push notification setup
         /*OneSignal.startInit(this)
@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        println("soicem///////////////////////////////////")
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             //구글 로그인에 성공했을때 넘어오는 토큰 값을 가지고 있는 Task
             var  task = GoogleSignIn.getSignedInAccountFromIntent(data)
