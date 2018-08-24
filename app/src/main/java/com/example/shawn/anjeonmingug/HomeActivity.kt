@@ -19,6 +19,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -26,11 +27,27 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
 import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
 import java.sql.Types.TIMESTAMP
 import java.util.*
 
-class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
+    fun onFinishReverseGeoCoding(result : String) {
+        println(result);
+    }
+
+    override fun onReverseGeoCoderFailedToFindAddress(p0: MapReverseGeoCoder?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    }
+
+    override fun onReverseGeoCoderFoundAddress(p0: MapReverseGeoCoder?, p1: String?) {
+        println(p1);
+        onFinishReverseGeoCoding(p1.toString());
+    }
+
+
     var latitude : Double? = null
     var longitude : Double? = null
     var mapView : MapView? = null
@@ -136,11 +153,16 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
         }
 
+
         button_search.setOnClickListener(){
-            println("button_search clicked");
+            //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+            val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
+            reverseGeoCoder.startFindingAddress()
         }
 
     }
+
+
 
     // GPS, NETWORK로 위치 가져오기
     fun getLocation(){
