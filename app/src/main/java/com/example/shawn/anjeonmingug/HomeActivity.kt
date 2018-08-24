@@ -95,8 +95,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         setContentView(R.layout.activity_home)
         setSupportActionBar(button_menu)
 
-
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -136,6 +134,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+        }
+
+        button_search.setOnClickListener(){
+            println("button_search clicked");
         }
 
     }
