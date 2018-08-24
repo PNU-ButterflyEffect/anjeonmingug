@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.content_main.view.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
@@ -147,6 +148,11 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         button_menu.bringToFront()
         editText_search.bringToFront()
         button_search.bringToFront()
+
+        //this.mapView!!.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        this.mapView!!.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving);
+        /*this.mapView!!.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithMarkerHeadingWithoutMapMoving);
+        this.mapView!!.setCurrentLocationRadius(0);*/
 
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){
