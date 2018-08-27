@@ -32,7 +32,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".FindPasswordActivity">
+        <activity android:name=".FindPasswordActivity"/>
+        <activity android:name=".SettingActivity">
 
         </activity>
         <meta-data
