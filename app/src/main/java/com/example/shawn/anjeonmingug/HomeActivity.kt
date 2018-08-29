@@ -117,10 +117,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        /*button_logout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this, MainActivity::class.java))
-        }*/
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -193,9 +189,12 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            /*super.onBackPressed()*/
         }
     }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

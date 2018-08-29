@@ -32,6 +32,7 @@ class SignupActivity : AppCompatActivity() {
             createEmailId()
         }
     }
+
     var userId : String? = null;
 
     var database = FirebaseDatabase.getInstance()
