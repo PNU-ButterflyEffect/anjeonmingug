@@ -33,6 +33,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".FindPasswordActivity"/>
+        <activity android:name=".InfoboardActivity"/>
+        <activity android:name=".reviewboardActivity"/>
         <activity android:name=".SettingActivity">
 
         </activity>

@@ -3,32 +3,22 @@ package com.example.shawn.anjeonmingug
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_signup.*
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ServerValue.TIMESTAMP
-import com.google.firebase.database.DatabaseReference
-
-import com.google.firebase.database.Exclude
-import com.google.firebase.internal.FirebaseAppHelper.getUid
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.iid.FirebaseInstanceId
+import kotlinx.android.synthetic.main.activity_signup.*
 import java.util.*
 
 
 class SignupActivity : AppCompatActivity() {
+    var authStateListener: FirebaseAuth.AuthStateListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("onCreate---------------------------------------")
         setContentView(R.layout.activity_signup)
 
-        // 회원가입 들어오면 세션을 죽임
-        FirebaseAuth.getInstance().signOut()
         //로그인 세션을 체크하는 부분
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             //세션
@@ -43,7 +33,6 @@ class SignupActivity : AppCompatActivity() {
         }
     }
     var userId : String? = null;
-    var authStateListener: FirebaseAuth.AuthStateListener? = null
 
     var database = FirebaseDatabase.getInstance()
 
@@ -102,8 +91,8 @@ class SignupActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         FirebaseAuth.getInstance().removeAuthStateListener(authStateListener!!)
     }
 }
