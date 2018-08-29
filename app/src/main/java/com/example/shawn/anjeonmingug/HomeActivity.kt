@@ -19,18 +19,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.content_main.view.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
-import java.sql.Types.TIMESTAMP
 import java.util.*
 
 class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
@@ -120,6 +117,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         nav_view.setNavigationItemSelectedListener(this)
 
+        /*button_logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }*/
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 

@@ -6,19 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -46,7 +42,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        FirebaseAuth.getInstance().signOut() // test case
+        //로그인 세션을 체크하는 부분
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            //세션
+            var user = firebaseAuth.currentUser
+            if (user != null) {
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+        }
         //var service = Intent(this, MyService:: class.java)
         //startService(service);
 
@@ -83,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         button_getstarted.setOnClickListener {
             var SignupActivity = Intent(this, SignupActivity::class.java)
             startActivity(SignupActivity)
+
         }
         //로그인
         button_login.setOnClickListener {
@@ -93,13 +97,7 @@ class MainActivity : AppCompatActivity() {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)
         }
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            //세션
-            var user = firebaseAuth.currentUser
-            if (user != null) {
-                startActivity(Intent(this, HomeActivity::class.java))
-            }
-        }
+
 
     }
     fun loginId(){
@@ -112,22 +110,6 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onResume() {
