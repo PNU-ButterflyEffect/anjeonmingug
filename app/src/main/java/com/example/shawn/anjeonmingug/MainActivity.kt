@@ -144,4 +144,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        // Your Code Here. Leave empty if you want nothing to happen on back press.
+    }
+
 }
