@@ -178,6 +178,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             return fullAddress
         }
 
+        // search button
         button_search.setOnClickListener(){
             //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
@@ -186,6 +187,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             val locationToKeyRef = database.getReference("locationToKey")
             val building_info =database.getReference("building_info")
             var keyOfBuildingInfo : Any? = null
+            var result: Map<String, String>? = null
             val menuListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
@@ -199,15 +201,17 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
             val menuListener2 = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    println("-"  + dataSnapshot.child(keyOfBuildingInfo.toString()).getValue())
+                    //<YourClass> post = postSnapshot.getValue(<YourClass>.class);
+                    result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    println("loadPost:onCancelled ${databaseError.toException()}")
+                    println(message = "loadPost:onCancelled ${databaseError.toException()}")
                 }
             }
             locationToKeyRef.addListenerForSingleValueEvent(menuListener)
             building_info.addListenerForSingleValueEvent(menuListener2)
+            println(result)
         }
     }
 
