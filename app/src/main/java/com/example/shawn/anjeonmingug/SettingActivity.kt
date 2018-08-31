@@ -16,9 +16,8 @@ class SettingActivity : AppCompatActivity() {
 
 
         textView_logout.setOnClickListener {
-
             FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this, MainActivity::class.java))
+            //startActivity(Intent(this, MainActivity::class.java))
         }
         textView_noti.setOnClickListener {
             includeSetting.setVisibility(View.VISIBLE)
