@@ -200,14 +200,29 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 }
             }
 
-
             val menuListener2 = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // get building_info result
                     // 여기서 info_board에 데이터 넣어주면됨
                     result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
                     address_text.setText(result!!["주소"])
-                            println("result : " + result!!["연면적"])
+                    constructYearText.setText(result!!["허가일"])
+                    if(result!!["내진설계여부"] == "O") {
+                        seismicDesignEnableText.setText("YES")
+                        seismicDesignView.setText("설계되어있음")
+                    }
+                    else if(result!!["내진설계여부"] == "X") {
+                        seismicDesignEnableText.setText("NO")
+                        seismicDesignView.setText("설계되어있지않음")
+                    }
+                    else {
+                        seismicDesignEnableText.setText("NOT DEFINED")
+                        seismicDesignView.setText("설계여부모름")
+                    }
+                    usageView.setText(result!!["주용도"])
+                    buldingTypeView.setText(result!!["구조"])
+                    areaSizeView.setText(result!!["연면적"])
+                    //println("result : " + result!!["연면적"])
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
