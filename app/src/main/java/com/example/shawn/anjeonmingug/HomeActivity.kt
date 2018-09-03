@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.view_setting.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
@@ -199,12 +200,14 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 }
             }
 
+
             val menuListener2 = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // get building_info result
                     // 여기서 info_board에 데이터 넣어주면됨
                     result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
-                    println("result : " + result!!["연면적"])
+                    address_text.setText(result!!["주소"])
+                            println("result : " + result!!["연면적"])
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
