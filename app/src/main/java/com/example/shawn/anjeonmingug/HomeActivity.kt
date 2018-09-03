@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.view_setting.*
+import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
@@ -143,7 +144,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         // 지도 만들기
         this.mapView = MapView(this)
         this.mapView!!.setDaumMapApiKey("6f504f9b73ad280372b2aff0036b6f32")
-
         val container = findViewById<View>(R.id.map_view) as RelativeLayout
         container.addView(mapView)
 
@@ -163,11 +163,24 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
         }
 
+        fun addMarker(latitude : Any, longitude : Any){
+            val marker = MapPOIItem()
+            marker.itemName = "Default Marker"
+            marker.tag = 0
+            marker.mapPoint = MapPoint.mapPointWithGeoCoord(latitude as Double, longitude as Double)
+            marker.markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
+            marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            this.mapView!!.addPOIItem(marker)
+        }
+
         fun getFullAddress(): String {
             val geocoder = Geocoder(this)
             var str : String = editText_search.text.toString()
             var test  = geocoder.getFromLocationName(str, 10)
             //println(test[0].getAddressLine(0).split(' '))
+            print(test[0].latitude)
+            print(test[0].longitude)
+            addMarker(test[0].latitude, test[0].longitude)
             var addressPieces = test[0].getAddressLine(0).split(' ')
             var country = addressPieces.get(0)
             var city = addressPieces.get(1)
@@ -180,6 +193,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         }
 
         // search button
+
         button_search.setOnClickListener(){
             //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
