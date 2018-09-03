@@ -178,8 +178,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             var str : String = editText_search.text.toString()
             var test  = geocoder.getFromLocationName(str, 10)
             //println(test[0].getAddressLine(0).split(' '))
-            print(test[0].latitude)
-            print(test[0].longitude)
+            //print(test[0].latitude)
+            //print(test[0].longitude)
             addMarker(test[0].latitude, test[0].longitude)
             var addressPieces = test[0].getAddressLine(0).split(' ')
             var country = addressPieces.get(0)
@@ -198,6 +198,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
             reverseGeoCoder.startFindingAddress()*/
+            this.mapView!!.removeAllPOIItems()
             val fullAddress = getFullAddress()
             val locationToKeyRef = database.getReference("locationToKey")
             val building_info =database.getReference("building_info")
@@ -219,7 +220,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                     // get building_info result
                     // 여기서 info_board에 데이터 넣어주면됨
                     result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
-                    address_text.setText(result!!["주소"])
+                    var address : Any = result!!["주소"].toString().split("/")[1]
+                    address_text.setText(address.toString())
                     constructYearText.setText(result!!["허가일"])
                     if(result!!["내진설계여부"] == "O") {
                         seismicDesignEnableText.setText("YES")
