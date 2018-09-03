@@ -14,7 +14,6 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-
         textView_logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             //startActivity(Intent(this, MainActivity::class.java))

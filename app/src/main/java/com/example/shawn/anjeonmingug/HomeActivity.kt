@@ -13,16 +13,14 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.RelativeLayout
-import com.example.shawn.anjeonmingug.R.id.drawer_layout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.view_setting.*
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
@@ -165,7 +162,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         fun addMarker(latitude : Any, longitude : Any){
             val marker = MapPOIItem()
-            marker.itemName = "Default Marker"
+            marker.itemName = "Tab Marker"
             marker.tag = 0
             marker.mapPoint = MapPoint.mapPointWithGeoCoord(latitude as Double, longitude as Double)
             marker.markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
@@ -193,11 +190,13 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         }
 
         // search button
-
         button_search.setOnClickListener(){
             //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
             reverseGeoCoder.startFindingAddress()*/
+
+            //sliding_window.visibility = View.VISIBLE
+
             this.mapView!!.removeAllPOIItems()
             val fullAddress = getFullAddress()
             val locationToKeyRef = database.getReference("locationToKey")
@@ -209,12 +208,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                     keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
                     //println("-"  + dataSnapshot.child(fullAddress).getValue())
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
                     println("loadPost:onCancelled ${databaseError.toException()}")
                 }
             }
-
             val menuListener2 = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // get building_info result

@@ -98,12 +98,11 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/mother"
+        android:id="@+id/sliding_window"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.6"
         android:clickable="true"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
