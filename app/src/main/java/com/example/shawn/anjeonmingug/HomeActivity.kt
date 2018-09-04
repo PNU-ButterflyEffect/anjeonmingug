@@ -165,6 +165,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             marker.itemName = "Tab Marker"
             marker.tag = 0
             marker.mapPoint = MapPoint.mapPointWithGeoCoord(latitude as Double, longitude as Double)
+            this.mapView!!.setMapCenterPoint(marker.mapPoint, true)
             marker.markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
             marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
             this.mapView!!.addPOIItem(marker)
