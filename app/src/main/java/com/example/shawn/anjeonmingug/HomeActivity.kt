@@ -19,8 +19,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.VISIBLE
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -121,6 +121,16 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        val headerview = navigationView.getHeaderView(0)
+        val logout = headerview.findViewById(R.id.button_logout) as TextView
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
 
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
