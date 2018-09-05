@@ -130,7 +130,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         val headerview = navigationView.getHeaderView(0)
         val logout = headerview.findViewById(R.id.button_logout) as TextView
-        /*val profilename = headerview.findViewById(R.id.userName) as TextView
+        val profilename = headerview.findViewById(R.id.userName) as TextView
         val text_userName = headerview.findViewById(R.id.textView_userName) as TextView
         var currentUser = FirebaseAuth.getInstance().currentUser
         val userInfo =database.getReference("Users/" + currentUser!!.uid + "/name")
@@ -144,7 +144,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 println("loadPost:onCancelled ${databaseError.toException()}")
             }
         }
-        userInfo.addListenerForSingleValueEvent(userListener)*/
+        userInfo.addListenerForSingleValueEvent(userListener)
 
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
