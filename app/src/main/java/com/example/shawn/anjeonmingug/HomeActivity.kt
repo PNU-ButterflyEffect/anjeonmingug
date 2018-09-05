@@ -130,6 +130,22 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         val headerview = navigationView.getHeaderView(0)
         val logout = headerview.findViewById(R.id.button_logout) as TextView
+        val profilename = headerview.findViewById(R.id.userName) as TextView
+        val text_userName = headerview.findViewById(R.id.textView_userName) as TextView
+        var currentUser = FirebaseAuth.getInstance().currentUser
+        val userInfo =database.getReference("Users/" + currentUser!!.uid + "/name")
+        val userListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var userName= dataSnapshot.value
+                profilename.text = userName.toString()
+                text_userName.text = profilename.text
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("loadPost:onCancelled ${databaseError.toException()}")
+            }
+        }
+        userInfo.addListenerForSingleValueEvent(userListener)
+
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
@@ -137,7 +153,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         val changepassword = headerview.findViewById(R.id.button_changePassword) as TextView
 
         changepassword.setOnClickListener {
-
             var editTextNewPassword = EditText(this)
             editTextNewPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             var alertDialog = AlertDialog.Builder(this)
