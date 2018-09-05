@@ -8,4 +8,6 @@
     <color name="colorReviewtext">#d2d1d1</color>
     <color name="colorSettingOK">#1ECC8F</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorGreen">#7bc885</color>
+
 </resources>
