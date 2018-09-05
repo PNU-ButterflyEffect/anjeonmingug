@@ -15,12 +15,16 @@ import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.method.PasswordTransformationMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -130,7 +134,20 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
         }
+        val changepassword = headerview.findViewById(R.id.button_changePassword) as TextView
 
+        changepassword.setOnClickListener {
+
+            var editTextNewPassword = EditText(this)
+            editTextNewPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            var alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("패스워드 변경")
+            alertDialog.setMessage("변경하고 싶은 패스워드를 입력하세요")
+            alertDialog.setView(editTextNewPassword)
+            alertDialog.setPositiveButton("변경",{dialogInterface, i -> changePassword(editTextNewPassword.text.toString()) })
+            alertDialog.setNegativeButton("취소",{dialogInterface, i -> dialogInterface.dismiss() })
+            alertDialog.show()
+        }
 
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -323,6 +340,16 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+    fun changePassword(password:String){
+        FirebaseAuth.getInstance().currentUser!!.updatePassword(password).addOnCompleteListener {
+            task ->
+            if(task.isSuccessful){
+                Toast.makeText(this,"비밀번호가 변경되었습니다.", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }
 
