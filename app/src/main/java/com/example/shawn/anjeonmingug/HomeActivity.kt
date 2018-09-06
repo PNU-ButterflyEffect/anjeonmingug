@@ -90,16 +90,15 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
     }
 
     // 위치가 바뀔 때마다 실행
-    override fun onLocationChanged(p0: Location?) {
-        if(latitude == p0!!.latitude && longitude == p0!!.longitude){
-            println("same place!");
-        } else {
-            latitude = p0!!.latitude
-            longitude = p0!!.longitude
-            appendLocation(latitude!!, longitude!!)
-            this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
-        }
-    }
+    override fun onLocationChanged(p0: Location?) =
+            if(latitude == p0!!.latitude && longitude == p0.longitude){
+                println("same place!");
+            } else {
+                latitude = p0.latitude
+                longitude = p0.longitude
+                appendLocation(latitude!!, longitude!!)
+                this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+            }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
     }
@@ -214,22 +213,20 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         }
 
         fun getFullAddress(): String {
-            val geocoder = Geocoder(this)
-            var str : String = editText_search.text.toString()
-            var test  = geocoder.getFromLocationName(str, 10)
-            //println(test[0].getAddressLine(0).split(' '))
-            //print(test[0].latitude)
-            //print(test[0].longitude)
+            val geoCoder = Geocoder(this)
+            val str : String = editText_search.text.toString()
+            val test  = geoCoder.getFromLocationName(str, 10)
+
             addMarker(test[0].latitude, test[0].longitude)
-            var addressPieces = test[0].getAddressLine(0).split(' ')
+            val addressPieces = test[0].getAddressLine(0).split(' ')
             var country = addressPieces.get(0)
             var city = addressPieces.get(1)
-            var district = addressPieces.get(2)
-            var address = addressPieces.get(4) + " " + addressPieces.get(5)
-            if(city.equals("부산광역시") )
+            val district = addressPieces.get(2)
+            val address = addressPieces.get(4) + " " + addressPieces.get(5)
+            if(city.equals("부산광역시") ) {
                 city = "부산"
-            var fullAddress = city + " " + district + " " + address
-            return fullAddress
+            }
+            return city + " " + district + " " + address
         }
 
         // search button

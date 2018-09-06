@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class SignupActivity : AppCompatActivity() {
     var authStateListener: FirebaseAuth.AuthStateListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,11 +75,12 @@ class SignupActivity : AppCompatActivity() {
         val userPass = editText_password.text.toString()
         val userName : String = editText_name.text.toString()
 
+        // 푸쉬 알림에 필요한 토큰을 생성한다.
         val refreshedToken = FirebaseInstanceId.getInstance().token
-
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(userEmail, userPass)
         .addOnCompleteListener { task ->
             if (task.isSuccessful){
+                // 새로운 사용자를 생성하고 데이터베이스에 정보를 저장한다.
                 this.writeNewUser(userName, userEmail, userPass, refreshedToken!!)
                 Toast.makeText(this, "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show()
             }else {
