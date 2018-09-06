@@ -296,7 +296,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                             seismicDesignView.setText("설계여부모름")
                         }
                         usageView.setText(result!!["주용도"])
-                        buldingTypeView.setText(result!!["구조"])
+                        buildingTypeView.setText(result!!["구조"])
                         areaSizeView.setText(result!!["연면적"])
                     }
 
@@ -313,7 +313,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 layout.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT
                 layout.requestLayout()
                 var slidinglayout = findViewById(R.id.sliding_layout) as SlidingUpPanelLayout
-                slidinglayout.panelHeight = 300
+                slidinglayout.panelHeight = 240
             }
             catch (e: Exception) {
                 println(e)

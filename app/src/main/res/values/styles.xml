@@ -17,6 +17,11 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorAdress</item>
+        <item name="colorControlActivated">@color/colorDistance</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

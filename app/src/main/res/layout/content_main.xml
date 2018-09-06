@@ -117,7 +117,7 @@
 
             <RatingBar
                 android:id="@+id/starcount"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="15dp"
@@ -126,16 +126,21 @@
                 app:layout_constraintEnd_toStartOf="@id/review_count"
                 app:layout_constraintStart_toEndOf="@id/score"
                 app:layout_constraintTop_toTopOf="@id/score"
-                app:srcCompat="@android:color/holo_blue_bright" />
+                android:isIndicator="false"
+                android:theme="@style/RatingBar"
+                android:numStars="5"
+                android:stepSize="0.5"
+                style="?android:attr/ratingBarStyleSmall" />
 
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:text="5.0"
-                android:textSize="18sp"
+                android:text="4.0"
+                android:textSize="14sp"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintStart_toStartOf="@id/buildingname_text"
                 app:layout_constraintTop_toBottomOf="@id/address_text" />
 
@@ -144,9 +149,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="안전민국빌딩"
-
+                android:textColor="@color/colorBlack"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@id/address_text"
                 app:layout_constraintEnd_toStartOf="@+id/distance"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -160,8 +165,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="주소"
-                android:textSize="16sp"
-
+                android:textSize="12sp"
+                android:textColor="@color/colorAdress"
                 app:layout_constraintBottom_toTopOf="@+id/review_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/review_count"
@@ -174,7 +179,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="리뷰개수"
-                android:textSize="18sp"
+                android:textSize="14sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -187,7 +193,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="999m"
-                android:textSize="13sp"
+                android:textSize="11sp"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintBottom_toTopOf="@id/review_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/buildingname_text"
@@ -212,7 +219,7 @@
                 android:layout_height="80dp"
                 android:layout_marginBottom="12dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/seismicDesignEnableBox"
@@ -242,7 +249,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buildingInspectionYearBox"
+                app:layout_constraintEnd_toStartOf="@+id/buildingFloorBox"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/constructYearBox"
                 app:layout_constraintTop_toTopOf="parent"
@@ -262,11 +269,11 @@
                 app:layout_constraintTop_toTopOf="@+id/seismicDesignEnableBox" />
 
             <ImageView
-                android:id="@+id/buildingInspectionYearBox"
+                android:id="@+id/buildingFloorBox"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:layout_marginTop="12dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -274,20 +281,20 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/seismicDesignEnableBox"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/inspectyear_round" />
+                app:srcCompat="@drawable/floor_round" />
 
             <TextView
-                android:id="@+id/buildingInspectionYearText"
+                android:id="@+id/buildingFloorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:text="3년전"
-                app:layout_constraintBottom_toBottomOf="@+id/buildingInspectionYearBox"
-                app:layout_constraintEnd_toEndOf="@+id/buildingInspectionYearBox"
-                app:layout_constraintStart_toStartOf="@+id/buildingInspectionYearBox"
-                app:layout_constraintTop_toTopOf="@+id/buildingInspectionYearBox" />
+                app:layout_constraintBottom_toBottomOf="@+id/buildingFloorBox"
+                app:layout_constraintEnd_toEndOf="@+id/buildingFloorBox"
+                app:layout_constraintStart_toStartOf="@+id/buildingFloorBox"
+                app:layout_constraintTop_toTopOf="@+id/buildingFloorBox" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -305,7 +312,7 @@
                 android:layout_marginStart="8dp"
                 android:inputType="none"
                 android:text="●"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/usage"
@@ -334,7 +341,7 @@
                 android:layout_marginStart="8dp"
                 android:inputType="none"
                 android:text="●"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintTop_toBottomOf="@id/usageDot"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/buildingType"
@@ -362,7 +369,7 @@
                 android:layout_marginStart="8dp"
                 android:inputType="none"
                 android:text="●"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/buildingTypeDot"
@@ -389,7 +396,7 @@
                 android:layout_marginStart="8dp"
                 android:inputType="none"
                 android:text="●"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorDistance"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/areaSizeDot"
                 app:layout_constraintBottom_toBottomOf="parent"

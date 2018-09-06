@@ -9,5 +9,8 @@
     <color name="colorSettingOK">#1ECC8F</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorGreen">#7bc885</color>
-    <color name="colorOrange">#f3ac4d</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDistance">#00c885</color>
+    <color name="colorAdress">#919191</color>
+
 </resources>
