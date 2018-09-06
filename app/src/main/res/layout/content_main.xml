@@ -299,7 +299,7 @@
             app:layout_constraintVertical_weight="3">
 
             <TextView
-                android:id="@+id/usagedot"
+                android:id="@+id/usageDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -309,7 +309,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/usage"
-                app:layout_constraintBottom_toTopOf="@id/buildingTypedot"
+                app:layout_constraintBottom_toTopOf="@id/buildingTypeDot"
                 app:layout_constraintHorizontal_bias="0.5"
                 />
 
@@ -320,25 +320,25 @@
                 android:inputType="none"
                 android:text="용도"
                 android:textColor="@android:color/background_dark"
-                app:layout_constraintTop_toTopOf="@id/usagedot"
-                app:layout_constraintStart_toEndOf="@+id/usagedot"
+                app:layout_constraintTop_toTopOf="@id/usageDot"
+                app:layout_constraintStart_toEndOf="@+id/usageDot"
                 app:layout_constraintEnd_toStartOf="@+id/UsageBar"
-                app:layout_constraintBottom_toBottomOf="@id/usagedot"
+                app:layout_constraintBottom_toBottomOf="@id/usageDot"
                 app:layout_constraintHorizontal_bias="0.5"
                 />
 
             <TextView
-                android:id="@+id/buildingTypedot"
+                android:id="@+id/buildingTypeDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:inputType="none"
                 android:text="●"
                 android:textColor="@color/colorOrange"
+                app:layout_constraintTop_toBottomOf="@id/usageDot"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/usagedot"
-                app:layout_constraintEnd_toStartOf="@+id/buldingType"
-                app:layout_constraintBottom_toTopOf="@id/areaSizedot"
+                app:layout_constraintEnd_toStartOf="@+id/buildingType"
+                app:layout_constraintBottom_toTopOf="@id/areaSizeDot"
                 app:layout_constraintHorizontal_bias="0.5"
                 />
 
@@ -349,14 +349,14 @@
                 android:inputType="none"
                 android:text="구조"
                 android:textColor="@android:color/background_dark"
-                app:layout_constraintBottom_toBottomOf="@id/buildingTypedot"
-                app:layout_constraintEnd_toStartOf="@+id/buldingTypeBar"
+                app:layout_constraintBottom_toBottomOf="@id/buildingTypeDot"
+                app:layout_constraintEnd_toStartOf="@+id/buildingTypeBar"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/buildingTypedot"
-                app:layout_constraintTop_toTopOf="buildingTypedot" />
+                app:layout_constraintStart_toEndOf="@id/buildingTypeDot"
+                app:layout_constraintTop_toTopOf="@id/buildingTypeDot" />
 
             <TextView
-                android:id="@+id/areaSizedot"
+                android:id="@+id/areaSizeDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -365,8 +365,8 @@
                 android:textColor="@color/colorOrange"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buildingTypedot"
-                app:layout_constraintBottom_toTopOf="@id/seismicDesigndot"
+                app:layout_constraintTop_toBottomOf="@id/buildingTypeDot"
+                app:layout_constraintBottom_toTopOf="@id/seismicDesignDot"
                 app:layout_constraintEnd_toStartOf="@id/areaSize"/>
 
             <TextView
@@ -376,14 +376,14 @@
                 android:inputType="none"
                 android:text="면적"
                 android:textColor="@android:color/background_dark"
-                app:layout_constraintBottom_toBottomOf="@id/areaSizedot"
+                app:layout_constraintBottom_toBottomOf="@id/areaSizeDot"
                 app:layout_constraintEnd_toStartOf="@+id/areaSizeBar"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/areaSizedot"
-                app:layout_constraintTop_toTopOf="@id/areaSizedot" />
+                app:layout_constraintStart_toEndOf="@id/areaSizeDot"
+                app:layout_constraintTop_toTopOf="@id/areaSizeDot" />
 
             <TextView
-                android:id="@+id/seismicDesigndot"
+                android:id="@+id/seismicDesignDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -391,9 +391,9 @@
                 android:text="●"
                 android:textColor="@color/colorOrange"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/areaSizedot"
+                app:layout_constraintTop_toBottomOf="@id/areaSizeDot"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buldingType"
+                app:layout_constraintEnd_toStartOf="@+id/buildingType"
                 app:layout_constraintHorizontal_bias="0.5"
                 />
 
@@ -404,11 +404,11 @@
                 android:inputType="none"
                 android:text="내진"
                 android:textColor="@android:color/background_dark"
-                app:layout_constraintBottom_toBottomOf="@id/seismicDesigndot"
+                app:layout_constraintBottom_toBottomOf="@id/seismicDesignDot"
                 app:layout_constraintEnd_toStartOf="@+id/seismicDesignBar"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/areaSizedot"
-                app:layout_constraintTop_toTopOf="@id/seismicDesigndot" />
+                app:layout_constraintStart_toEndOf="@id/areaSizeDot"
+                app:layout_constraintTop_toTopOf="@id/seismicDesignDot" />
 
             <ImageView
                 android:id="@+id/UsageBar"
@@ -433,7 +433,7 @@
                 app:layout_constraintTop_toTopOf="@id/buildingType"
                 app:layout_constraintBottom_toBottomOf="@id/buildingType"
                 app:layout_constraintStart_toEndOf="@id/buildingType"
-                app:layout_constraintEnd_toStartOf="@+id/buldingTypeView"
+                app:layout_constraintEnd_toStartOf="@+id/buildingTypeView"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:srcCompat="@android:drawable/progress_indeterminate_horizontal" />
 
@@ -481,7 +481,7 @@
                 />
 
             <TextView
-                android:id="@+id/buldingTypeView"
+                android:id="@+id/buildingTypeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -493,7 +493,7 @@
                 android:textColor="@android:color/background_dark"
                 app:layout_constraintTop_toTopOf="@id/buildingTypeBar"
                 app:layout_constraintBottom_toBottomOf="@id/buildingTypeBar"
-                app:layout_constraintStart_toEndOf="@+id/buldingTypeBar"
+                app:layout_constraintStart_toEndOf="@+id/buildingTypeBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 />
@@ -532,15 +532,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/seismicDesignBar"
                 />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/usageView"
-                app:layout_constraintStart_toStartOf="@+id/UsageBar"
-                tools:layout_editor_absoluteY="16dp" />
 
         </android.support.constraint.ConstraintLayout>
 
