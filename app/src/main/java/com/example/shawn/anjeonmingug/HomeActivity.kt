@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
@@ -25,6 +26,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.shawn.anjeonmingug.R.id.drawer_layout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -137,7 +139,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var userName= dataSnapshot.value
                 profileName.text = userName.toString() + " 님"
-
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 println("loadPost:onCancelled ${databaseError.toException()}")
@@ -216,7 +217,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             val geoCoder = Geocoder(this)
             val str : String = editText_search.text.toString()
             val test  = geoCoder.getFromLocationName(str, 10)
-
             addMarker(test[0].latitude, test[0].longitude)
             val addressPieces = test[0].getAddressLine(0).split(' ')
             var country = addressPieces.get(0)
@@ -227,6 +227,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 city = "부산"
             }
             return city + " " + district + " " + address
+
         }
 
         // search button
@@ -236,54 +237,63 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             reverseGeoCoder.startFindingAddress()*/
 
             //sliding_window.visibility = View.VISIBLE
+            try {
+                this.mapView!!.removeAllPOIItems()
+                val fullAddress = getFullAddress()
+                val locationToKeyRef = database.getReference("locationToKey")
+                val building_info =database.getReference("building_info")
+                var keyOfBuildingInfo : Any? = null
+                var result: Map<String, String>? = null
+                val menuListener = object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
+                        //println("-"  + dataSnapshot.child(fullAddress).getValue())
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        println("loadPost:onCancelled ${databaseError.toException()}")
+                    }
+                }
+                val menuListener2 = object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        // get building_info result
+                        // 여기서 info_board에 데이터 넣어주면됨
+                        result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
+                        var address : Any = result!!["주소"].toString().split("/")[1]
+                        address_text.setText(address.toString())
+                        constructYearText.setText(result!!["허가일"])
+                        if(result!!["내진설계여부"] == "O") {
+                            seismicDesignEnableText.setText("YES")
+                            seismicDesignView.setText("설계되어있음")
+                        }
+                        else if(result!!["내진설계여부"] == "X") {
+                            seismicDesignEnableText.setText("NO")
+                            seismicDesignView.setText("설계되어있지않음")
+                        }
+                        else {
+                            seismicDesignEnableText.setText("NOT DEFINED")
+                            seismicDesignView.setText("설계여부모름")
+                        }
+                        usageView.setText(result!!["주용도"])
+                        buldingTypeView.setText(result!!["구조"])
+                        areaSizeView.setText(result!!["연면적"])
+                        //println("result : " + result!!["연면적"])
+                    }
 
-            this.mapView!!.removeAllPOIItems()
-            val fullAddress = getFullAddress()
-            val locationToKeyRef = database.getReference("locationToKey")
-            val building_info =database.getReference("building_info")
-            var keyOfBuildingInfo : Any? = null
-            var result: Map<String, String>? = null
-            val menuListener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
-                    //println("-"  + dataSnapshot.child(fullAddress).getValue())
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        println(message = "loadPost:onCancelled ${databaseError.toException()}")
+                    }
                 }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("loadPost:onCancelled ${databaseError.toException()}")
-                }
+                locationToKeyRef.addListenerForSingleValueEvent(menuListener)
+                building_info.addListenerForSingleValueEvent(menuListener2)
             }
-            val menuListener2 = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // get building_info result
-                    // 여기서 info_board에 데이터 넣어주면됨
-                    result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
-                    var address : Any = result!!["주소"].toString().split("/")[1]
-                    address_text.setText(address.toString())
-                    constructYearText.setText(result!!["허가일"])
-                    if(result!!["내진설계여부"] == "O") {
-                        seismicDesignEnableText.setText("YES")
-                        seismicDesignView.setText("설계되어있음")
-                    }
-                    else if(result!!["내진설계여부"] == "X") {
-                        seismicDesignEnableText.setText("NO")
-                        seismicDesignView.setText("설계되어있지않음")
-                    }
-                    else {
-                        seismicDesignEnableText.setText("NOT DEFINED")
-                        seismicDesignView.setText("설계여부모름")
-                    }
-                    usageView.setText(result!!["주용도"])
-                    buldingTypeView.setText(result!!["구조"])
-                    areaSizeView.setText(result!!["연면적"])
-                    //println("result : " + result!!["연면적"])
-                }
+            catch (e: Exception) {
+                println(e)
+                Toast.makeText(this,"해당 주소는 존재하지 않습니다.", Toast.LENGTH_LONG).show()
+            }
+            finally {
+                // optional finally block
+            }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println(message = "loadPost:onCancelled ${databaseError.toException()}")
-                }
-            }
-            locationToKeyRef.addListenerForSingleValueEvent(menuListener)
-            building_info.addListenerForSingleValueEvent(menuListener2)
         }
     }
 
