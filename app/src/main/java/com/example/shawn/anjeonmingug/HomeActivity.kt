@@ -57,8 +57,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
     }
 
 
-    var latitude : Double? = null
-    var longitude : Double? = null
+    private var latitude : Double? = null
+    private var longitude : Double? = null
+    var EPSG_4326_X : String? = null
+    var EPSG_4326_Y : String? = null
     var mapView : MapView? = null
     var database = FirebaseDatabase.getInstance()
 
@@ -96,8 +98,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             if(latitude == p0!!.latitude && longitude == p0.longitude){
                 println("same place!");
             } else {
-                latitude = p0.latitude
-                longitude = p0.longitude
+                this.latitude = p0.latitude
+                this.longitude = p0.longitude
                 appendLocation(latitude!!, longitude!!)
                 this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             }
@@ -164,7 +166,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             alertDialog.show()
         }
 
-
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         // 권한 확인
@@ -227,11 +228,20 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 city = "부산"
             }
             return city + " " + district + " " + address
+        }
 
+        fun CalculationByDistance(initialLat:Double, initialLong:Double, finalLat:Double, finalLong:Double):Double {
+            /*PRE: All the input values are in radians!*/
+            val latDiff = finalLat - initialLat
+            val longDiff = finalLong - initialLong
+            val earthRadius = 6371.0 //In Km if you want the distance in km
+            val distance = 2.0 * earthRadius * Math.asin(Math.sqrt(Math.pow(Math.sin(latDiff / 2.0), 2.0) + Math.cos(initialLat) * Math.cos(finalLat) * Math.pow(Math.sin(longDiff / 2), 2.0)))
+            return distance
         }
 
         // search button
         button_search.setOnClickListener(){
+
             //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
             reverseGeoCoder.startFindingAddress()*/
@@ -244,6 +254,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 val building_info =database.getReference("building_info")
                 var keyOfBuildingInfo : Any? = null
                 var result: Map<String, String>? = null
+                //var EPSG_4326_X : String? = null
+                //var EPSG_4326_Y : String? = null
                 val menuListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
@@ -259,6 +271,14 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                         // 여기서 info_board에 데이터 넣어주면됨
                         result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
                         var address : Any = result!!["주소"].toString().split("/")[1]
+
+                        //CalculationByDistance(initialLat:Double, initialLong:Double, finalLat:Double, finalLong:Double)
+                        var distanveBetweenTwoSpot = CalculationByDistance(result!!["EPSG_4326_X"]!!.toDouble(),
+                                result!!["EPSG_4326_Y"]!!.toDouble(),
+                                this@HomeActivity.latitude!!.toDouble(),
+                                this@HomeActivity.longitude!!.toDouble()
+                        )
+                        distance.setText((distanveBetweenTwoSpot).toString())
                         address_text.setText(address.toString())
                         constructYearText.setText(result!!["허가일"])
                         if(result!!["내진설계여부"] == "O") {
@@ -276,13 +296,13 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                         usageView.setText(result!!["주용도"])
                         buldingTypeView.setText(result!!["구조"])
                         areaSizeView.setText(result!!["연면적"])
-                        //println("result : " + result!!["연면적"])
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
                         println(message = "loadPost:onCancelled ${databaseError.toException()}")
                     }
                 }
+
                 locationToKeyRef.addListenerForSingleValueEvent(menuListener)
                 building_info.addListenerForSingleValueEvent(menuListener2)
             }
