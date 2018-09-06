@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="100dp"
+    sothree:umanoPanelHeight="0dp"
     app:layout_constraintBottom_toBottomOf="parent"
     android:background="#00000000"
     tools:context=".HomeActivity"
@@ -87,6 +87,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.100000024"
             app:srcCompat="@drawable/searchbar_3" />
+
         <RelativeLayout
             android:id="@+id/map_view"
             android:layout_width="0dp"
@@ -95,19 +96,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-        </RelativeLayout>
+            app:layout_constraintTop_toTopOf="parent"></RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/sliding_window"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.6"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 
         <android.support.constraint.ConstraintLayout
@@ -115,8 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentStart="true"
-            app:layout_constraintVertical_weight="3"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="3">
 
             <RatingBar
                 android:id="@+id/starcount"
@@ -306,10 +303,10 @@
                 android:id="@+id/usage"
                 android:layout_width="86dp"
                 android:layout_height="22dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
                 android:inputType="none"
                 android:text="●용도"
                 app:layout_constraintBottom_toTopOf="@+id/buldingType"
@@ -323,10 +320,10 @@
                 android:id="@+id/buldingType"
                 android:layout_width="86dp"
                 android:layout_height="22dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
                 android:inputType="none"
                 android:text="●구조"
                 app:layout_constraintBottom_toTopOf="@+id/areaSize"
@@ -340,10 +337,10 @@
                 android:id="@+id/areaSize"
                 android:layout_width="86dp"
                 android:layout_height="22dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
                 android:inputType="none"
                 android:text="●면적"
                 app:layout_constraintBottom_toTopOf="@+id/seismicDesign"
@@ -357,10 +354,10 @@
                 android:id="@+id/seismicDesign"
                 android:layout_width="86dp"
                 android:layout_height="22dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
                 android:inputType="none"
                 android:text="●내진"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -466,44 +463,86 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/reviewNbookmark"
+            android:id="@+id/reviewcontent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="5"
-            app:layout_constraintTop_toBottomOf="@id/detail_info"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-
-
-            >
-
-            <ImageButton
-                android:id="@+id/starbutton"
-                android:layout_width="30dp"
-                android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            app:layout_constraintTop_toBottomOf="@id/detail_info"
+            app:layout_constraintVertical_weight="5">
+            <ImageView
+                android:id="@+id/imageView_profile"
+                android:layout_width="56dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:adjustViewBounds="false"
+                android:scaleType="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/review_Write_Button"
-                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@android:drawable/star_big_on" />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
-            <Button
-                android:id="@+id/review_Write_Button"
-                android:layout_width="315dp"
-                android:layout_height="35dp"
-                android:layout_marginEnd="8dp"
-                android:text="리뷰작성"
+            <TextView
+                android:id="@+id/textView_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="34dp"
+                android:text="옥상 문이 잠겨있어요ㅜㅜ"
+                android:textColor="@android:color/background_dark"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView_profile"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="2dp" />
+            <TextView
+                android:id="@+id/textView_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="41dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="18dp"
+                android:text="2018.7.2"
+                android:textColor="@color/colorReviewtext"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView_profile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="41dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                android:text="강수*"
+                android:textColor="@color/colorReviewtext"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView_comma"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_comma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="41dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                android:text=","
+                android:textColor="@color/colorReviewtext"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView_date"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </android.support.constraint.ConstraintLayout>
+
 
 
     </android.support.constraint.ConstraintLayout>

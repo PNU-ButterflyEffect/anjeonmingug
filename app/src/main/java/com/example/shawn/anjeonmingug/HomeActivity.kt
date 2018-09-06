@@ -11,9 +11,9 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
@@ -22,11 +22,11 @@ import android.text.method.PasswordTransformationMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.example.shawn.anjeonmingug.R.id.drawer_layout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
 import net.daum.mf.map.api.MapPOIItem
@@ -201,6 +202,8 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         // gps 클릭 시 지도 위치 조정
         gps_icon.setOnClickListener(){
             this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+            var slidinglayout = findViewById(R.id.sliding_layout) as SlidingUpPanelLayout
+            slidinglayout.panelHeight = 0
         }
 
         fun addMarker(latitude : Any, longitude : Any){
@@ -246,7 +249,6 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
             reverseGeoCoder.startFindingAddress()*/
 
-            //sliding_window.visibility = View.VISIBLE
             try {
                 this.mapView!!.removeAllPOIItems()
                 val fullAddress = getFullAddress()
@@ -305,6 +307,13 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
                 locationToKeyRef.addListenerForSingleValueEvent(menuListener)
                 building_info.addListenerForSingleValueEvent(menuListener2)
+
+                //Panel 부분 생성  파트
+                var layout = findViewById(R.id.sliding_window) as ConstraintLayout
+                layout.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT
+                layout.requestLayout()
+                var slidinglayout = findViewById(R.id.sliding_layout) as SlidingUpPanelLayout
+                slidinglayout.panelHeight = 300
             }
             catch (e: Exception) {
                 println(e)
