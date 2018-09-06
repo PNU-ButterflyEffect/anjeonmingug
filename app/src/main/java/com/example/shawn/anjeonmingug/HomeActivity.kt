@@ -125,19 +125,19 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         nav_view.setNavigationItemSelectedListener(this)
 
-
+        //네비게이션 헤더 부분 이름 변경, 로그아웃 기능, 비밀번호 변경 기능
         val navigationView = findViewById(R.id.nav_view) as NavigationView
-        val headerview = navigationView.getHeaderView(0)
-        val logout = headerview.findViewById(R.id.button_logout) as TextView
-        val profilename = headerview.findViewById(R.id.userName) as TextView
-        val text_userName = headerview.findViewById(R.id.textView_userName) as TextView
-        var currentUser = FirebaseAuth.getInstance().currentUser
+        val headerView = navigationView.getHeaderView(0)
+        val logout = headerView.findViewById(R.id.button_logout) as TextView
+        var profileName = headerView.findViewById(R.id.userName) as TextView
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
         val userInfo =database.getReference("Users/" + currentUser!!.uid + "/name")
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var userName= dataSnapshot.value
-                profilename.text = userName.toString()
-                text_userName.text = profilename.text
+                profileName.text = userName.toString() + " 님"
+
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 println("loadPost:onCancelled ${databaseError.toException()}")
@@ -149,7 +149,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, MainActivity::class.java))
         }
-        val changepassword = headerview.findViewById(R.id.button_changePassword) as TextView
+        val changepassword = headerView.findViewById(R.id.button_changePassword) as TextView
 
         changepassword.setOnClickListener {
             var editTextNewPassword = EditText(this)
