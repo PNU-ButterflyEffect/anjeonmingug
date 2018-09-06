@@ -280,9 +280,11 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                                 this@HomeActivity.latitude!!.toDouble(),
                                 this@HomeActivity.longitude!!.toDouble()
                         )
-                        distance.setText((distanveBetweenTwoSpot).toString())
+                        distance.setText((distanveBetweenTwoSpot.toInt()).toString() + "m")
                         address_text.setText(address.toString())
-                        constructYearText.setText(result!!["허가일"])
+                        constructYearText.setText(( 2018 - result!!["허가일"]!!.split('.')[0].toInt() + 1).toString() + " 년식")
+                        buildingFloorText.setText(result!!["층수"] + "층")
+
                         if(result!!["내진설계여부"] == "O") {
                             seismicDesignEnableText.setText("YES")
                             seismicDesignView.setText("설계되어있음")
@@ -297,7 +299,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                         }
                         usageView.setText(result!!["주용도"])
                         buildingTypeView.setText(result!!["구조"])
-                        areaSizeView.setText(result!!["연면적"])
+                        areaSizeView.setText((result!!["연면적"]).toString() + "㎡")
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -313,7 +315,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 layout.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT
                 layout.requestLayout()
                 var slidinglayout = findViewById(R.id.sliding_layout) as SlidingUpPanelLayout
-                slidinglayout.panelHeight = 240
+                slidinglayout.panelHeight = 300
             }
             catch (e: Exception) {
                 println(e)
