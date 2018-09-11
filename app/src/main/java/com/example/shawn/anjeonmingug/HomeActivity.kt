@@ -101,7 +101,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             } else {
                 this.latitude = p0.latitude
                 this.longitude = p0.longitude
-                appendLocation(latitude!!, longitude!!)
+                //appendLocation(latitude!!, longitude!!)
                 this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             }
 
@@ -125,6 +125,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        var service = Intent(this,notiService::class.java)
+        var service2 = Intent(this, locationService::class.java)
+        startService(service)
+        startService(service2)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -178,7 +182,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 .addOnSuccessListener { location : Location? ->
                     this.latitude = location!!.latitude
                     this.longitude = location!!.longitude
-                    appendLocation(this.latitude!!, this.longitude!!)
+                    //appendLocation(this.latitude!!, this.longitude!!)
                     this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
                 }
 
