@@ -3,6 +3,7 @@ package com.example.shawn.anjeonmingug
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -50,6 +51,7 @@ class notiService : FirebaseMessagingService(), LocationListener, ActivityCompat
         super.onCreate()
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         super.onMessageReceived(remoteMessage)
         // TODO(developer): Handle FCM messages here.
@@ -72,6 +74,7 @@ class notiService : FirebaseMessagingService(), LocationListener, ActivityCompat
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification()!!.getBody());
+            Log.d(TAG, "latitude : " + latitude.toString())
         }
     }
     fun getLocation(){
