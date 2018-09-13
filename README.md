@@ -1,5 +1,5 @@
 <div align="middle">
-<img src="https://github.com/esquake/esquake/blob/master/resources/readme.png" height="250px" >
+<img src="https://github.com/PNU-ButterflyEffect/anjeonmingug/blob/master/app/src/main/res/drawable/appicon.png" height="250px" >
 </div>
 <br/>
 
