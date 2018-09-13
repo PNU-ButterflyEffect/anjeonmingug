@@ -3,6 +3,7 @@ package com.example.shawn.anjeonmingug
 import android.icu.text.SimpleDateFormat
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,8 +21,26 @@ class review_write : AppCompatActivity() {
         setContentView(R.layout.activity_review_write)
 
         var writingPage = getIntent()
-        var count = writingPage.getIntExtra("sizeoflist", 0)
+        //var count = writingPage.getIntExtra("sizeoflist", 0)
         var streetAddressFull = writingPage.getStringExtra("fulladdress")
+        var countDB = FirebaseDatabase.getInstance().getReference("building_reviewDB/" + com.example.shawn.anjeonmingug.streetAddressFull + "/count")
+        var thesize:Int = 0
+        val reviewCountListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var review_count = dataSnapshot.value
+                try {
+                    thesize = review_count.toString().toInt()
+                } catch (e: NumberFormatException) {
+                    Log.d("thesize", "NumberFormatException")
+                    thesize = 0
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("loadPost:onCancelled ${databaseError.toException()}")
+            }
+        }
+        countDB.addListenerForSingleValueEvent(reviewCountListener)
         var userName = writingPage.getStringExtra("userName")
 
         review_submit.setOnClickListener(){
@@ -33,20 +52,9 @@ class review_write : AppCompatActivity() {
             val rawReviewData = userName+"\\split\\"+review_text.text.toString()+"\\split\\"+getTime
 
             //DB에 추가하기
-            database.getReference("building_reviewDB/"+streetAddressFull+"/review"+count.toString()).setValue(rawReviewData)
-            val review_contents = database.getReference("building_reviewDB/"+streetAddressFull+"/count")
-            var counter:Int = 0 // 이거 오류날지도
-            val reviewcountListener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var counter= dataSnapshot.value.toString().toInt()
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("loadPost:onCancelled ${databaseError.toException()}")
-                }
-            }
-            review_contents.addListenerForSingleValueEvent(reviewcountListener)
+            database.getReference("building_reviewDB/"+streetAddressFull+"/review"+ thesize.toString()).setValue(rawReviewData)
 
-            database.getReference("building_reviewDB/"+streetAddressFull+"/count").setValue((counter+1).toString())
+            database.getReference("building_reviewDB/"+streetAddressFull+"/count").setValue((thesize+1).toString())
 
 
             Toast.makeText(this, "리뷰를 등록하였습니다.", Toast.LENGTH_LONG).show()

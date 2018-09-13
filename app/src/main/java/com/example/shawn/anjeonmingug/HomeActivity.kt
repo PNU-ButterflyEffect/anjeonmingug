@@ -2,6 +2,8 @@ package com.example.shawn.anjeonmingug
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,22 +12,22 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Bundle
+import android.os.*
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.VelocityTrackerCompat
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -37,6 +39,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.sothree.slidinguppanel.ScrollableViewHelper
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -45,16 +48,10 @@ import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
 import java.util.*
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
-import android.view.*
-import android.widget.*
-import com.sothree.slidinguppanel.ScrollableViewHelper
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
-import kotlin.collections.ArrayList
+
+var thesize:Int = 2
+var streetAddressFull:Any? = null//주소값 데이터를 받기위한 선언
+var items:ArrayList<HomeActivity.reviewclass> = ArrayList()
 
 class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
     fun onFinishReverseGeoCoding(result : String) {
@@ -114,7 +111,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             } else {
                 this.latitude = p0.latitude
                 this.longitude = p0.longitude
-                appendLocation(latitude!!, longitude!!)
+                //appendLocation(latitude!!, longitude!!)
                 this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             }
 
@@ -128,11 +125,10 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
     }
 
     var locationManager : LocationManager? =null
-    var streetAddressFull:Any? = null//주소값 데이터를 받기위한 선언
 
-    private var mVelocityTracker:VelocityTracker? = null
+    private var mVelocityTracker: VelocityTracker? = null
     private var isSlidingUp = false
-    override fun onTouchEvent(event:MotionEvent):Boolean {
+    override fun onTouchEvent(event: MotionEvent):Boolean {
         val index = event.getActionIndex()
         val action = event.getActionMasked()
         val pointerId = event.getPointerId(index)
@@ -159,14 +155,14 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 // Log velocity of pixels per second
                 // Best practice to use VelocityTrackerCompat where possible.
                 var yVelocity = VelocityTrackerCompat.getYVelocity(mVelocityTracker, pointerId)
-                Log.d("", "Y velocity: " + yVelocity)
+                Log.d("touch", "Y velocity: " + yVelocity)
                 if (yVelocity > 1000 || yVelocity < -1000) {
-                    Log.d("", ("Y velocity is upper than 1000"))
+                    Log.d("touch", ("Y velocity is upper than 1000"))
                     isSlidingUp = true
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-            // Return a VelocityTracker object back to be re-used by others.
+                // Return a VelocityTracker object back to be re-used by others.
                 mVelocityTracker?.clear()
                 isSlidingUp = false
             }
@@ -180,8 +176,13 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         setContentView(R.layout.activity_home)
         setSupportActionBar(button_menu)
 
+        Log.d("app", "app start")
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        var service = Intent(this,notiService::class.java)
+        var service2 = Intent(this, locationService::class.java)
+        startService(service)
+        startService(service2)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -235,7 +236,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 .addOnSuccessListener { location : Location? ->
                     this.latitude = location!!.latitude
                     this.longitude = location!!.longitude
-                    appendLocation(this.latitude!!, this.longitude!!)
+                    //appendLocation(this.latitude!!, this.longitude!!)
                     this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
                 }
 
@@ -309,7 +310,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             try {
                 this.mapView!!.removeAllPOIItems()
                 val fullAddress = getFullAddress()
-                streetAddressFull = fullAddress
+                streetAddressFull = fullAddress //streetaddressFull값 할당
                 val locationToKeyRef = database.getReference("locationToKey")
                 val building_info =database.getReference("building_info")
                 var keyOfBuildingInfo : Any? = null
@@ -382,73 +383,23 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             finally {
                 // optional finally block
             }
-
         }
 
-        //리뷰개수 가져오기
-        val review_count = database.getReference("building_reviewDB/"+streetAddressFull+"/count")
-        var thesize:Int = 0
-        val reviewCountListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var review_count= dataSnapshot.value
-                try {
-                    thesize = review_count.toString().toInt()
-                }
-
-                catch (e: NumberFormatException) {
-                }
-
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                println("loadPost:onCancelled ${databaseError.toException()}")
-            }
-        }
-        review_count.addListenerForSingleValueEvent(reviewCountListener)
-
-        //리뷰내용 가져오고 파싱하기
-        val review_contents = database.getReference("building_reviewDB/"+streetAddressFull+"/"+thesize.toString())
-        var reviewerName:String? = null
-        var reviewContents:String? = null
-        var reviewdate:String? = null
-        val reviewContentsListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var raw_contents= dataSnapshot.value.toString()
-                //파싱해서 각 변수로 넣기
-                var raw_list = raw_contents.split("\\split\\")
-                if (raw_list.size==2) {
-                    reviewerName = raw_list[0]
-                    reviewContents = raw_list[1]
-                    reviewdate = raw_list[2]
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                println("loadPost:onCancelled ${databaseError.toException()}")
-            }
-        }
-        review_contents.addListenerForSingleValueEvent(reviewContentsListener)
-
-        var listView : ListView
-        var items:ArrayList<reviewclass> = ArrayList()
-
-        for (i in 0 until thesize)
-            items.add(reviewclass(reviewerName, reviewContents, reviewdate))
-
-        listView = findViewById(R.id.reviewListView) as ListView
+        reviewListView.adapter = customAdapter()
+        reviewListView.layoutManager = LinearLayoutManager(this)
+        sliding_layout.setScrollableView(reviewListView)
         var reviewlisthelper = NestedScrollableViewHelper()
-        reviewlisthelper.getScrollableViewScrollPosition(listView, isSlidingUp)//////////////////////////////////////////////
-        sliding_layout.setDragView(listView)
-
-
-        //setEnableDragViewTouchEvents(true)
-
-        listView.adapter = customAdapter(this@HomeActivity, R.layout.list_contents_format, items, thesize)
+        reviewlisthelper.getScrollableViewScrollPosition(sliding_layout.findViewById<RecyclerView>(R.id.reviewListView), isSlidingUp)//////////////////////////////////////////////
+        if(isSlidingUp) {
+            sliding_layout.setDragView(sliding_layout.findViewById<RecyclerView>(R.id.reviewListView))
+        }
         //sliding_layout.setScrollableView(listView)
 
-        review_Write_Button.setOnClickListener{
+        review_Write_Button.setOnClickListener {
             var writingpage = Intent(this, review_write::class.java)
             writingpage.putExtra("sizeoflist", thesize)
             writingpage.putExtra("fulladdress", streetAddressFull.toString())
-            writingpage.putExtra("userName",profileName.text)
+            writingpage.putExtra("userName", profileName.text)
 
             startActivity(writingpage)
         }
@@ -531,7 +482,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             }
         }
     }
-    internal class reviewclass {
+    class reviewclass {
         var img:Int = 0 // 사진 - res/drawable
         var name:String? = null
         var wrttienDate:String? = null
@@ -546,50 +497,60 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         }
         constructor() {}
     }
-    //onCreate에 객체 생성하여 집어넣었음
 
-    internal class customAdapter(context:Context, layout:Int, al:ArrayList<reviewclass>, thesize:Int): BaseAdapter() {
-        var context:Context // 현재 화면의 제어권자
-        var layout:Int = 0 // 한행을 그려줄 layout
-        var al:ArrayList<reviewclass> // 다량의 데이터
-        var inf: LayoutInflater // 화면을 그려줄 때 필요
-        var review_counter:Int
-        init{
-            this.context = context
-            this.layout = layout
-            this.al = al
-            this.inf = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            this.review_counter = thesize
+    class customAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            var view = LayoutInflater.from(parent.context).inflate(R.layout.list_contents_format, parent, false)
+            Log.d("adapter viewholder","adapter start")
+            //var view = LayoutInflater.from(parent!!.context).inflate(R.layout.list_contents_format, parent, false)
+
+            return CustomViewHolder(view)
         }
-        override fun getCount() :Int { // 총 데이터의 개수를 리턴
-            return al.size
+
+        class CustomViewHolder(view:View?) : RecyclerView.ViewHolder(view){
+            var nameview : TextView? = null
+            var dateview : TextView? = null
+            var contentsView : TextView? = null
+            init {
+                nameview = view!!.findViewById(R.id.userName)
+                dateview = view.findViewById(R.id.written_date)
+                contentsView = view.findViewById(R.id.review_contents)
+            }
         }
-        override fun getItem(position:Int):Any { // 해당번째의 데이터 값
-            return al.get(position)
+
+        override fun getItemCount(): Int {
+            return thesize
         }
-        override fun getItemId(position:Int):Long { // 해당번째의 고유한 id 값
-            return position.toLong()
-        }
-        // 해당번째의 행에 내용을 셋팅(데이터와 레이아웃의 연결관계 정의)
-        override fun getView(position:Int, convertView:View, parent:ViewGroup):View {
-            var convertView_temp = convertView
-            if (convertView_temp == null)
-                convertView_temp = inf.inflate(layout, null)
-            val userPHOTO = convertView_temp.findViewById(R.id.userphoto) as ImageView
-            val userNAME = convertView_temp.findViewById(R.id.userName) as TextView
-            val reviewContents = convertView_temp.findViewById(R.id.review_contents) as TextView
-            val writtenDate = convertView_temp.findViewById(R.id.written_date) as TextView
-            val reviewCounter = convertView_temp.findViewById(R.id.review_counter) as TextView
-            val m = al.get(position)
-            //userPHOTO.setImageResource(m.img)
-            reviewCounter.setText(this.review_counter)
-            userNAME.setText(m.name)
-            reviewContents.setText(m.review_contents)
-            writtenDate.setText(m.wrttienDate)
-            return convertView_temp
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+            ////////////////////////////////////////////////////
+            Log.d("binding","binding start")
+            Log.d("binding", "item size is "+items.size.toString())
+            var view = holder as HomeActivity.customAdapter.CustomViewHolder
+
+            try {
+                view.nameview!!.text = items[position].name
+                view.dateview!!.text = items[position].wrttienDate
+                view.contentsView!!.text = items[position].review_contents
+                Log.d("binding","binding end")
+            }
+            catch (e:IndexOutOfBoundsException){
+                if (items.isNotEmpty()){
+                    view.nameview!!.text = items[0].name.toString()
+                    view.dateview!!.text = items[0].wrttienDate.toString()
+                    view.contentsView!!.text = items[0].review_contents.toString()
+                    Log.d("binding","binding only one")
+                }
+                else{
+                    Log.d("contents","no item")
+                }
+            }
+            ////////////////////////////////////////////
         }
     }
-    class NestedScrollableViewHelper:ScrollableViewHelper() {
+
+    class NestedScrollableViewHelper: ScrollableViewHelper() {
         override fun getScrollableViewScrollPosition(mScrollableView:View, isSlidingUp:Boolean):Int {
             if (mScrollableView is NestedScrollView) {
                 if (isSlidingUp) {
@@ -607,5 +568,3 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
         }
     }
 }
-
-

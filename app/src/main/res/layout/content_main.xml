@@ -608,6 +608,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/reviewlistlayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
@@ -620,13 +621,13 @@
             app:layout_constraintVertical_weight="5"
             >
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/reviewListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:choiceMode="singleChoice"
-                android:dividerHeight="1.5dp"/>
+                android:dividerHeight="1.5dp"
+                ></android.support.v7.widget.RecyclerView>
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 
