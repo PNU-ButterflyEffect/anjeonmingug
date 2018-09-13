@@ -23,7 +23,7 @@
 
 
 <p align="center">
-<img src="https://github.com/esquake/esquake/blob/master/resources/myLoca.png">
+<img src="">
 </p>
 <p align="center">
   <b>로그인화면</b>
