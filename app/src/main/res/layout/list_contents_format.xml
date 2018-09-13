@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <ImageView
+        android:id="@+id/userphoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+         />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_toRightOf="@+id/userphoto"
+        android:textColor="#000"
+        android:text="이름"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/written_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/userName"
+        android:layout_marginStart="14dp"
+        android:text="쓴날자"
+        android:textColor="#000"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/review_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/userphoto"
+        android:layout_below="@+id/userName"
+        android:layout_marginStart="4dp"
+        android:text="리뷰내용"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000" />
+</RelativeLayout>
