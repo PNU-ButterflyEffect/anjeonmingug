@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
@@ -27,6 +28,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.shawn.anjeonmingug.R.id.drawer_layout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -43,20 +45,7 @@ import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
 import java.util.*
 
-class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
-    fun onFinishReverseGeoCoding(result : String) {
-        println(result);
-    }
-
-    override fun onReverseGeoCoderFailedToFindAddress(p0: MapReverseGeoCoder?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onReverseGeoCoderFoundAddress(p0: MapReverseGeoCoder?, p1: String?) {
-        println(p1);
-        onFinishReverseGeoCoding(p1.toString());
-    }
-
+class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener {
 
     private var latitude : Double? = null
     private var longitude : Double? = null
@@ -102,7 +91,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 this.latitude = p0.latitude
                 this.longitude = p0.longitude
                 //appendLocation(latitude!!, longitude!!)
-                this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+                //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
             }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
@@ -127,6 +116,23 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 this, drawer_layout, button_menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         var service = Intent(this,notiService::class.java)
         var service2 = Intent(this, locationService::class.java)
+        println(intent.action)
+        val extras = intent.extras
+        if(extras != null){
+            val keySet = extras.keySet()
+            val iterator = keySet.iterator()
+            while (iterator.hasNext()) {
+                val key = iterator.next()
+                val o = extras.get(key)
+                println("$key:$o")
+            }
+            //this.latitude = extras.getString("latitude").toDouble()
+            //this.longitude = extras.getString("longitude").toDouble()
+            /*println("soicem" + extras.getString("address"))
+            println("soicem" + extras.getString("latitude"))
+            println("soicem" + extras.getString("longitude"))*/
+        }
+
         startService(service)
         startService(service2)
         drawer_layout.addDrawerListener(toggle)
@@ -183,7 +189,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                     this.latitude = location!!.latitude
                     this.longitude = location!!.longitude
                     //appendLocation(this.latitude!!, this.longitude!!)
-                    this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
+                    //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
                 }
 
         // 지도 만들기
@@ -221,6 +227,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             this.mapView!!.addPOIItem(marker)
         }
 
+
         fun getFullAddress(): String {
             val geoCoder = Geocoder(this)
             val str : String = editText_search.text.toString()
@@ -242,30 +249,33 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             val latDiff = finalLat - initialLat
             val longDiff = finalLong - initialLong
             val earthRadius = 6371.0 //In Km if you want the distance in km
-            val distance = 2.0 * earthRadius * Math.asin(Math.sqrt(Math.pow(Math.sin(latDiff / 2.0), 2.0) + Math.cos(initialLat) * Math.cos(finalLat) * Math.pow(Math.sin(longDiff / 2), 2.0)))
+            //remove 2.0 *
+            val distance = earthRadius * Math.asin(Math.sqrt(Math.pow(Math.sin(latDiff / 2.0), 2.0) + Math.cos(initialLat) * Math.cos(finalLat) * Math.pow(Math.sin(longDiff / 2), 2.0)))
             return distance
         }
-
-        // search button
-        button_search.setOnClickListener(){
-
-            //this.mapView!!.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude!!, longitude!!), true);
-            /*val reverseGeoCoder = MapReverseGeoCoder("6f504f9b73ad280372b2aff0036b6f32", mapView!!.mapCenterPoint, this, this)
-            reverseGeoCoder.startFindingAddress()*/
-
+        /*
+        type 0 : search_button = 0
+        type 1 : push noti = 1
+        */
+        fun makeInfoboard(type : Int){
             try {
                 this.mapView!!.removeAllPOIItems()
-                val fullAddress = getFullAddress()
+                var fullAddress : String? = null
+                when(type){
+                    0 -> fullAddress = getFullAddress()
+                    1 -> fullAddress = extras.getString("address")
+                }
                 val locationToKeyRef = database.getReference("locationToKey")
                 val building_info =database.getReference("building_info")
                 var keyOfBuildingInfo : Any? = null
                 var result: Map<String, String>? = null
                 //var EPSG_4326_X : String? = null
                 //var EPSG_4326_Y : String? = null
+                println("fullAddress : " + fullAddress)
                 val menuListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        keyOfBuildingInfo = dataSnapshot.child(fullAddress).getValue()
-                        //println("-"  + dataSnapshot.child(fullAddress).getValue())
+                        keyOfBuildingInfo = dataSnapshot.child(fullAddress!!).getValue()
+                        println("-keyOfBuildingInfo"  + dataSnapshot.child(fullAddress).getValue())
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
                         println("loadPost:onCancelled ${databaseError.toException()}")
@@ -275,16 +285,18 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         // get building_info result
                         // 여기서 info_board에 데이터 넣어주면됨
+                        println("keyOfBuildingInfo : " + (keyOfBuildingInfo))
                         result = dataSnapshot.child(keyOfBuildingInfo.toString()).getValue() as Map<String, String>?
+                        println(result)
                         var address : Any = result!!["주소"].toString().split("/")[1]
 
                         //CalculationByDistance(initialLat:Double, initialLong:Double, finalLat:Double, finalLong:Double)
-                        var distanveBetweenTwoSpot = CalculationByDistance(result!!["EPSG_4326_X"]!!.toDouble(),
+                        var distanceBetweenTwoSpot = CalculationByDistance(result!!["EPSG_4326_X"]!!.toDouble(),
                                 result!!["EPSG_4326_Y"]!!.toDouble(),
                                 this@HomeActivity.latitude!!.toDouble(),
                                 this@HomeActivity.longitude!!.toDouble()
                         )
-                        distance.setText((distanveBetweenTwoSpot.toInt()).toString() + "m")
+                        distance.setText((distanceBetweenTwoSpot.toInt()).toString() + "m")
                         address_text.setText(address.toString())
                         constructYearText.setText(( 2018 - result!!["허가일"]!!.split('.')[0].toInt() + 1).toString() + " 년식")
                         buildingFloorText.setText(result!!["층수"] + "층")
@@ -328,10 +340,25 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             finally {
                 // optional finally block
             }
+        }
 
+        if(extras != null){
+            makeInfoboard(1)
+            println(extras.getString("latitude") + " / " +  extras.getString("longitude"))
+            addMarker(extras.getString("latitude").toDouble(), extras.getString("longitude").toDouble())
+        }
+        // search button
+        button_search.setOnClickListener(){
+            makeInfoboard(0)
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        val extras = intent.extras
+        if (extras != null) {
+            Toast.makeText(this, "check", Toast.LENGTH_SHORT).show()
+        }
+    }
     // GPS, NETWORK로 위치 가져오기
     fun getLocation(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED &&

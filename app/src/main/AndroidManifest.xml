@@ -31,7 +31,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity">
+            <intent-filter>
+                <action android:name="HOMEACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".FindPasswordActivity" />
@@ -55,7 +61,7 @@
         <service
             android:name=".locationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
 </manifest>
