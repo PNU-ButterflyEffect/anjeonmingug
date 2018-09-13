@@ -15,14 +15,16 @@ import android.support.constraint.ConstraintLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.VelocityTrackerCompat
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.method.PasswordTransformationMethod
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -34,6 +36,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.sothree.slidinguppanel.ScrollableViewHelper
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -42,6 +45,10 @@ import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
 import java.util.*
+
+var thesize:Int = 0
+var streetAddressFull:Any? = null//주소값 데이터를 받기위한 선언
+var items:ArrayList<HomeActivity.reviewclass> = ArrayList()
 
 class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnNavigationItemSelectedListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
     fun onFinishReverseGeoCoding(result : String) {
@@ -116,6 +123,49 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
 
     var locationManager : LocationManager? =null
 
+    private var mVelocityTracker: VelocityTracker? = null
+    private var isSlidingUp = false
+    override fun onTouchEvent(event: MotionEvent):Boolean {
+        val index = event.getActionIndex()
+        val action = event.getActionMasked()
+        val pointerId = event.getPointerId(index)
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+                if (mVelocityTracker == null) {
+                    // Retrieve a new VelocityTracker object to watch the
+                    // velocity of a motion.
+                    mVelocityTracker = VelocityTracker.obtain()
+                } else {
+                    // Reset the velocity tracker back to its initial state.
+                    mVelocityTracker?.clear()
+                    isSlidingUp = false
+                }
+                // Add a user's movement to the tracker.
+                mVelocityTracker?.addMovement(event)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                mVelocityTracker?.addMovement(event)
+                // When you want to determine the velocity, call
+                // computeCurrentVelocity(). Then call getXVelocity()
+                // and getYVelocity() to retrieve the velocity for each pointer ID.
+                mVelocityTracker?.computeCurrentVelocity(1000)
+                // Log velocity of pixels per second
+                // Best practice to use VelocityTrackerCompat where possible.
+                var yVelocity = VelocityTrackerCompat.getYVelocity(mVelocityTracker, pointerId)
+                Log.d("", "Y velocity: " + yVelocity)
+                if (yVelocity > 1000 || yVelocity < -1000) {
+                    Log.d("", ("Y velocity is upper than 1000"))
+                    isSlidingUp = true
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                // Return a VelocityTracker object back to be re-used by others.
+                mVelocityTracker?.clear()
+                isSlidingUp = false
+            }
+        }
+        return true
+    }
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -256,6 +306,7 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             try {
                 this.mapView!!.removeAllPOIItems()
                 val fullAddress = getFullAddress()
+                streetAddressFull = fullAddress //streetaddressFull값 할당
                 val locationToKeyRef = database.getReference("locationToKey")
                 val building_info =database.getReference("building_info")
                 var keyOfBuildingInfo : Any? = null
@@ -328,7 +379,72 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
             finally {
                 // optional finally block
             }
+            //리뷰개수 가져오기(thesize)
+            val review_count = database.getReference("building_reviewDB/" + streetAddressFull + "/count")
+            val reviewCountListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var review_count = dataSnapshot.value
+                    try {
+                        thesize = review_count.toString().toInt()
+                    } catch (e: NumberFormatException) {
+                        Log.d("", "NumberFormatException")
+                        thesize = 0
+                    }
+                }
 
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("loadPost:onCancelled ${databaseError.toException()}")
+                }
+            }
+            review_count.addListenerForSingleValueEvent(reviewCountListener)
+            Log.d("", "thesize is " + thesize.toString())
+
+            //리뷰내용 가져오고 파싱하기
+            var reviewerName: String? = null
+            var reviewContents: String? = null
+            var reviewdate: String? = null
+            val reviewContentsListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var raw_contents = dataSnapshot.value.toString()
+                    //파싱해서 각 변수로 넣기
+                    var raw_list = raw_contents.split("\\split\\")
+                    if (raw_list.size == 2) {
+                        reviewerName = raw_list[0]
+                        reviewContents = raw_list[1]
+                        reviewdate = raw_list[2]
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("loadPost:onCancelled ${databaseError.toException()}")
+                }
+            }
+            var index = 0
+            while (index < thesize) {
+                var reviewcontentsDB = database.getReference("building_reviewDB/" + streetAddressFull + "/review" + index.toString())
+                reviewcontentsDB.addListenerForSingleValueEvent(reviewContentsListener)
+                items.add(reviewclass(reviewerName, reviewContents, reviewdate))
+                index = index + 1
+            }
+        }
+
+
+        reviewListView.adapter = customAdapter()
+        reviewListView.layoutManager = LinearLayoutManager(this)
+        sliding_layout.setScrollableView(reviewListView)
+        var reviewlisthelper = NestedScrollableViewHelper()
+        reviewlisthelper.getScrollableViewScrollPosition(sliding_layout.findViewById<RecyclerView>(R.id.reviewListView), isSlidingUp)//////////////////////////////////////////////
+        if(isSlidingUp) {
+            sliding_layout.setDragView(sliding_layout.findViewById<RecyclerView>(R.id.reviewListView))
+        }
+        //sliding_layout.setScrollableView(listView)
+
+        review_Write_Button.setOnClickListener {
+            var writingpage = Intent(this, review_write::class.java)
+            writingpage.putExtra("sizeoflist", thesize)
+            writingpage.putExtra("fulladdress", streetAddressFull.toString())
+            writingpage.putExtra("userName", profileName.text)
+
+            startActivity(writingpage)
         }
     }
 
@@ -406,6 +522,82 @@ class HomeActivity() : AppCompatActivity(), LocationListener, NavigationView.OnN
                 Toast.makeText(this,"비밀번호가 변경되었습니다.", Toast.LENGTH_LONG).show()
             }else{
                 Toast.makeText(this,task.exception.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    class reviewclass {
+        var img:Int = 0 // 사진 - res/drawable
+        var name:String? = null
+        var wrttienDate:String? = null
+        var review_contents:String? = null
+
+        // 생성자가 있으면 객체 생성시 편리하다
+        constructor(name:String?, review_contents:String?, writtenDate:String?) {
+            //this.img = img  img:Int,
+            this.name = name
+            this.wrttienDate = writtenDate
+            this.review_contents = review_contents
+        }
+        constructor() {}
+    }
+
+    class customAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            var view = LayoutInflater.from(parent!!.context).inflate(R.layout.list_contents_format, parent, false)
+
+            return CustomViewHolder(view)
+        }
+
+        class CustomViewHolder(view:View?) : RecyclerView.ViewHolder(view){
+            var nameview : TextView? = null
+            var dateview : TextView? = null
+            var contentsView : TextView? = null
+            init {
+                nameview = view!!.findViewById(R.id.userName)
+                dateview = view.findViewById(R.id.written_date)
+                contentsView = view.findViewById(R.id.review_contents)
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return thesize
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            var view = holder as CustomViewHolder
+            try {
+                view.nameview!!.text = items[position].name
+                view.dateview!!.text = items[position].wrttienDate
+                view.contentsView!!.text = items[position].review_contents
+            }
+            catch (e:IndexOutOfBoundsException){
+                if (items.isNotEmpty()){
+                    view.nameview!!.text = items[0].name
+                    view.dateview!!.text = items[0].wrttienDate
+                    view.contentsView!!.text = items[0].review_contents
+                }
+                else{
+                    Log.d("","no item")
+                }
+            }
+
+        }
+    }
+
+    class NestedScrollableViewHelper: ScrollableViewHelper() {
+        override fun getScrollableViewScrollPosition(mScrollableView:View, isSlidingUp:Boolean):Int {
+            if (mScrollableView is NestedScrollView) {
+                if (isSlidingUp) {
+                    return mScrollableView.getScrollY()
+                }
+                else {
+                    val nsv = (mScrollableView)
+                    val child = nsv.getChildAt(0)
+                    return (child.getBottom() - (nsv.getHeight() + nsv.getScrollY()))
+                }
+            }
+            else {
+                return 0
             }
         }
     }

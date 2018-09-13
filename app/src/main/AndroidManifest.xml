@@ -55,7 +55,9 @@
         <service
             android:name=".locationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".review_write"></activity>
     </application>
 
 </manifest>

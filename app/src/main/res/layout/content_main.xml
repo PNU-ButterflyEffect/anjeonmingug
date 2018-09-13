@@ -560,89 +560,74 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/reviewcontent"
+            android:id="@+id/reviewwrite"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             app:layout_constraintTop_toBottomOf="@id/detail_info"
             app:layout_constraintVertical_weight="5">
-            <ImageView
-                android:id="@+id/imageView_profile"
-                android:layout_width="56dp"
-                android:layout_height="48dp"
+
+
+            <Button
+                android:id="@+id/review_Write_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="리뷰 쓰기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/static_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:adjustViewBounds="false"
-                android:scaleType="center"
+                android:text="리뷰개수"
+                android:textSize="17dp"
+                android:textColor="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_input_add" />
-
-            <TextView
-                android:id="@+id/textView_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="23dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="34dp"
-                android:text="옥상 문이 잠겨있어요ㅜㅜ"
-                android:textColor="@android:color/background_dark"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView_profile"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView_date"
+                android:id="@+id/review_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="41dp"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="18dp"
-                android:text="2018.7.2"
-                android:textColor="@color/colorReviewtext"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView_profile"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="41dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="18dp"
-                android:text="강수*"
-                android:textColor="@color/colorReviewtext"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView_comma"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView_comma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="41dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="18dp"
-                android:text=","
-                android:textColor="@color/colorReviewtext"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView_date"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:text="N"
+                android:textSize="17dp"
+                app:layout_constraintBottom_toBottomOf="@id/static_count"
+                app:layout_constraintStart_toEndOf="@id/static_count"
+                app:layout_constraintTop_toTopOf="@id/static_count" />
         </android.support.constraint.ConstraintLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reviewwrite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_weight="5"
+            >
 
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reviewListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:dividerHeight="1.5dp"
+                ></android.support.v7.widget.RecyclerView>
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
